@@ -14,6 +14,24 @@ class AuthenticationServiceSmokeTest {
         println(response.toString())
     }
 
+    @Test
+    fun `test register`() = runTest {
+        val service: AuthenticationService = makeSUT()
+
+        val response =
+            service.register(
+                username = "user77",
+                firstName = "firstName",
+                lastName = "lastName",
+                email = "user77@email.com",
+                password = "pass123"
+            ) {
+                organizationName("organization77")
+            }
+
+        println(response.toString())
+    }
+
 
     // region HELPERS
     private fun makeSUT(): AuthenticationService = AuthenticationService(client = createProjectSpaceHttpClient())
