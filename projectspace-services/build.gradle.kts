@@ -1,11 +1,12 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    kotlin("plugin.serialization") version Versions.kotlin
 }
 
 kotlin {
     android()
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -17,7 +18,12 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation(Dependencies.KotlinX.serializationCore)
+                implementation(project(":libraries:http"))
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
