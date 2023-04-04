@@ -1,7 +1,6 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    kotlin("plugin.serialization") version Versions.kotlin
 }
 
 kotlin {
@@ -13,14 +12,13 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "projectspace-services"
+            baseName = "smoke-tests"
         }
     }
 
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(Dependencies.KotlinX.serializationCore)
                 implementation(project(":libraries:http"))
             }
         }
@@ -28,6 +26,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("test"))
                 implementation(project(":libraries:test"))
+                implementation(project(":projectspace-services"))
             }
         }
         val androidMain by getting
