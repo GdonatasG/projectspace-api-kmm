@@ -22,6 +22,15 @@ class ProjectServiceSmokeTest {
         println(response)
     }
 
+    @Test
+    fun `test getProjectRisk`() = runTest {
+        val service = makeSUT()
+
+        val response = service.getProjectRisk(id = 6)
+
+        println(response)
+    }
+
     // region HELPERS
     private fun makeSUT(): ProjectService = ProjectService(client = createAuthorizedProjectSpaceHttpClient())
     // endregion
