@@ -1,4 +1,4 @@
-package com.project.space.services.authentication.response
+package com.project.space.services.auth.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

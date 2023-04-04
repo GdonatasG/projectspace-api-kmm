@@ -1,4 +1,4 @@
-package com.project.space.services.authentication.builder
+package com.project.space.services.auth.builder
 
 import com.libraries.http.models.HttpMethod
 import com.libraries.http.models.HttpRequest

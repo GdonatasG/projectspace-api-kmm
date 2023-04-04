@@ -1,13 +1,13 @@
-package com.project.space.services.authentication
+package com.project.space.services.auth
 
 import com.libraries.test.runTest
 import com.project.space.services.utils.createProjectSpaceHttpClient
 import kotlin.test.Test
 
-class AuthenticationServiceSmokeTest {
+class AuthServiceSmokeTest {
     @Test
     fun `test login`() = runTest {
-        val service: AuthenticationService = makeSUT()
+        val service: AuthService = makeSUT()
 
         val response = service.login(username = "user123", password = "pass123")
 
@@ -16,7 +16,7 @@ class AuthenticationServiceSmokeTest {
 
     @Test
     fun `test register`() = runTest {
-        val service: AuthenticationService = makeSUT()
+        val service: AuthService = makeSUT()
 
         val response =
             service.register(
@@ -34,6 +34,6 @@ class AuthenticationServiceSmokeTest {
 
 
     // region HELPERS
-    private fun makeSUT(): AuthenticationService = AuthenticationService(client = createProjectSpaceHttpClient())
+    private fun makeSUT(): AuthService = AuthService(client = createProjectSpaceHttpClient())
     // endregion
 }
