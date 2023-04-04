@@ -31,4 +31,9 @@ class ProjectService(private val client: ProjectSpaceHttpClient) {
         builder: CreateProject.() -> Unit = {}
     ): ProjectSpaceResult<SimpleSuccessResponse> =
         client.request(CreateProject(name = name).apply(builder))
+
+    suspend fun updateProject(
+        id: Int,
+        builder: UpdateProject.() -> Unit
+    ): ProjectSpaceResult<SimpleSuccessResponse> = client.request(UpdateProject(id = id).apply(builder))
 }
