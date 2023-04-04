@@ -13,6 +13,7 @@ class ProjectServiceSmokeTest {
 
         println(response)
     }
+
     @Test
     fun `test getProjectStatistics`() = runTest {
         val service = makeSUT()
@@ -35,7 +36,20 @@ class ProjectServiceSmokeTest {
     fun `test getSessionUserAvailableProjects`() = runTest {
         val service = makeSUT()
 
-        val response = service.getSessionUserAvailableProjects()
+        val response = service.getSessionUserAvailableProjects {
+            owned(true)
+        }
+
+        println(response)
+    }
+
+    @Test
+    fun `test createProject`() = runTest {
+        val service = makeSUT()
+
+        val response = service.createProject(name = "123test") {
+            description("123test description")
+        }
 
         println(response)
     }
