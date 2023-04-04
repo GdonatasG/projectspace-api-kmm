@@ -23,10 +23,19 @@ class ProjectServiceSmokeTest {
     }
 
     @Test
-    fun `test getProjectRisk`() = runTest {
+    fun `test getProjectMonthlyRisk`() = runTest {
         val service = makeSUT()
 
-        val response = service.getProjectRisk(id = 6)
+        val response = service.getProjectMonthlyRisk(id = 6)
+
+        println(response)
+    }
+
+    @Test
+    fun `test getSessionUserAvailableProjects`() = runTest {
+        val service = makeSUT()
+
+        val response = service.getSessionUserAvailableProjects()
 
         println(response)
     }

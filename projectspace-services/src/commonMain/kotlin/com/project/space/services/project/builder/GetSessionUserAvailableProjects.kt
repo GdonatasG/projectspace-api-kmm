@@ -5,9 +5,9 @@ import com.libraries.http.models.HttpRequest
 import com.project.space.services.common.Config
 import com.project.space.services.common.request.ProjectSpaceRequest
 
-internal class GetProjectRisk(private val id: Int): ProjectSpaceRequest {
+internal class GetSessionUserAvailableProjects : ProjectSpaceRequest {
     override fun build(): HttpRequest = HttpRequest(
         method = HttpMethod.GET,
-        endpoint = Config.API_ENDPOINT + "/project/$id/risk"
+        endpoint = Config.API_ENDPOINT + "/project/available"
     )
 }
