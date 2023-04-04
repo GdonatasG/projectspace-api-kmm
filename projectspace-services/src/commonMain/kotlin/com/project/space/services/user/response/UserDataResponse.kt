@@ -1,12 +1,12 @@
-package com.project.space.services.project.response
+package com.project.space.services.user.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ProjectDataResponse(
+data class UserDataResponse(
     @SerialName("success")
     val success: Boolean,
     @SerialName("data")
-    val data: ProjectResponse
+    val data: UserResponse
 )
