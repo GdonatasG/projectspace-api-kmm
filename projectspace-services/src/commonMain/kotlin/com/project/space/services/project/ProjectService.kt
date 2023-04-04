@@ -36,4 +36,7 @@ class ProjectService(private val client: ProjectSpaceHttpClient) {
         id: Int,
         builder: UpdateProject.() -> Unit
     ): ProjectSpaceResult<SimpleSuccessResponse> = client.request(UpdateProject(id = id).apply(builder))
+
+    suspend fun deleteProject(id: Int): ProjectSpaceResult<SimpleSuccessResponse> =
+        client.request(DeleteProject(id = id))
 }

@@ -66,6 +66,15 @@ class ProjectServiceSmokeTest {
         println(response)
     }
 
+    @Test
+    fun `test deleteProject`() = runTest {
+        val service = makeSUT()
+
+        val response = service.deleteProject(id = 8)
+
+        println(response)
+    }
+
     // region HELPERS
     private fun makeSUT(): ProjectService = ProjectService(client = createAuthorizedProjectSpaceHttpClient())
     // endregion
