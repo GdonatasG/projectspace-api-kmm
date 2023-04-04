@@ -18,6 +18,15 @@ class UserServiceSmokeTest {
         println(response)
     }
 
+    @Test
+    fun `test getSessionUser`() = runTest {
+        val service: UserService = makeSUT()
+
+        val response = service.getSessionUser()
+
+        println(response)
+    }
+
 
     // region HELPERS
     private fun makeSUT(): UserService = UserService(client = createAuthorizedProjectSpaceHttpClient())

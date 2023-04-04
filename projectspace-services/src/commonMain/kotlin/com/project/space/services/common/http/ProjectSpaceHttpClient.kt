@@ -29,7 +29,7 @@ class DefaultProjectSpaceHttpClient(private val client: HttpClient) : ProjectSpa
             }
 
             if (response.code == 403) {
-                return ProjectSpaceResult.Unauthorized
+                return ProjectSpaceResult.InsufficientPermissions
             }
 
             val errorResponse = decodeFromString(response.body, ProjectSpaceErrorResponse::class)
