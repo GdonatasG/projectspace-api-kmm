@@ -13,6 +13,14 @@ class ProjectServiceSmokeTest {
 
         println(response)
     }
+    @Test
+    fun `test getProjectStatistics`() = runTest {
+        val service = makeSUT()
+
+        val response = service.getProjectStatistics(id = 6)
+
+        println(response)
+    }
 
     // region HELPERS
     private fun makeSUT(): ProjectService = ProjectService(client = createAuthorizedProjectSpaceHttpClient())
