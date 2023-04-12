@@ -24,4 +24,4 @@ internal fun createAuthorizedProjectSpaceHttpClient(): ProjectSpaceHttpClient = 
 }
 
 private const val accessToken: String =
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMTIzIiwicm9sZSI6IlVTRVIiLCJleHAiOjE2ODEyMjkzOTh9.j6eakd9CX4mzFKSU5nkdAxdBCsRwG_OjiP13puAuIBBIQ4YtLqoTIsPKXMVgJHGadaEmHVevfdtnMUfLNJRp9A"
+"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMTIzIiwicm9sZSI6IlVTRVIiLCJleHAiOjE2ODIxNzM0NTZ9.PyuN2QAcwztNBhI-6u4pwIB80K2UO5N_8cxTP-NO6vAPSgR_uui2Bvw5C8bJJefG7jeWVyWZ65RnPnbHZaQB0g"
