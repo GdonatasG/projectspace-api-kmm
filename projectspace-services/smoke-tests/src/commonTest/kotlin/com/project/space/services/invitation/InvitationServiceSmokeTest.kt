@@ -41,6 +41,15 @@ class InvitationServiceSmokeTest {
         println(response)
     }
 
+    @Test
+    fun `test acceptInvitation`() = runTest {
+        val service = makeSUT()
+
+        val response = service.acceptInvitation(id = 12)
+
+        println(response)
+    }
+
     // region HELPERS
     private fun makeSUT(): InvitationService = InvitationService(client = createAuthorizedProjectSpaceHttpClient())
     // endregion
