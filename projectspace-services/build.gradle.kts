@@ -22,6 +22,8 @@ kotlin {
             dependencies {
                 implementation(Dependencies.KotlinX.serializationCore)
                 implementation(project(":libraries:http"))
+
+                implementation(project(":libraries:utils"))
             }
         }
         val commonTest by getting {
