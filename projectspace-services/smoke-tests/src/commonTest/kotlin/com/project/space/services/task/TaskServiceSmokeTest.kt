@@ -57,6 +57,15 @@ class TaskServiceSmokeTest {
         println(response.toString())
     }
 
+    @Test
+    fun `test openTask`() = runTest {
+        val service = makeSUT()
+
+        val response = service.openTask(id = 20)
+
+        println(response.toString())
+    }
+
     // region HELPERS
     private fun makeSUT(): TaskService =
         TaskService(client = createAuthorizedProjectSpaceHttpClient())

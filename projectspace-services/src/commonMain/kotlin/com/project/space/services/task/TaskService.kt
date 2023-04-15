@@ -25,4 +25,5 @@ class TaskService(private val client: ProjectSpaceHttpClient) {
         client.request(CreateTask(projectId = projectId, title = title, priorityId = priorityId).apply(builder))
 
     suspend fun closeTask(id: Int): ProjectSpaceResult<SimpleSuccessResponse> = client.request(CloseTask(id = id))
+    suspend fun openTask(id: Int): ProjectSpaceResult<SimpleSuccessResponse> = client.request(OpenTask(id = id))
 }
