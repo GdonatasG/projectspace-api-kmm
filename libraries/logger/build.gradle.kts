@@ -19,7 +19,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(Dependencies.Logging.napier)
+                api(Dependencies.Logging.napier)
             }
         }
         val commonTest by getting {

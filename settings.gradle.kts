@@ -8,8 +8,17 @@ pluginManagement {
 
 rootProject.name = "projectspace-api"
 
+include(":android:androidApp")
+include(":android:components")
+
 include(":feature:common")
+
+include(":feature:splashscreen")
+include(":feature:splashscreen:android-ui")
+
 include(":feature:authorization")
+include(":feature:authorization:android-ui")
+
 
 include(":libraries:test")
 include(":libraries:utils")

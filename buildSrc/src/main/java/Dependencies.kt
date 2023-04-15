@@ -42,28 +42,30 @@ object Dependencies {
     object Android {
         const val coreKtx = "androidx.core:core-ktx:1.9.0"
         const val appCompat = "androidx.appcompat:appcompat:1.6.0"
+        const val splashScreen = "androidx.core:core-splashscreen:1.0.0-beta02"
 
         object Accompanist {
             const val flowLayout = "com.google.accompanist:accompanist-flowlayout:${Versions.accompanist}"
+            const val systemUiController = "com.google.accompanist:accompanist-systemuicontroller:${Versions.accompanist}"
         }
-    }
 
-    object Compose {
-        const val material3 = "androidx.compose.material3:material3:${Versions.composeMaterial3}"
-        const val material = "androidx.compose.material:material:1.3.1"
-        const val materialIcons = "androidx.compose.material:material-icons-extended:1.3.1"
-        const val activity = "androidx.activity:activity-compose:1.6.1"
-        const val runtimeLivedata = "androidx.compose.runtime:runtime-livedata:1.3.3"
-        const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
+        object Compose {
+            const val material3 = "androidx.compose.material3:material3:${Versions.composeMaterial3}"
+            const val material = "androidx.compose.material:material:1.3.1"
+            const val materialIcons = "androidx.compose.material:material-icons-extended:1.3.1"
+            const val activity = "androidx.activity:activity-compose:1.6.1"
+            const val runtimeLivedata = "androidx.compose.runtime:runtime-livedata:1.3.3"
+            const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
 
-        const val navigation = "androidx.navigation:navigation-compose:${Versions.navCompose}"
-    }
+            const val navigation = "androidx.navigation:navigation-compose:${Versions.navCompose}"
+        }
 
-    object ComposeDestinations {
-        const val core = "io.github.raamcosta.compose-destinations:core:${Versions.composeDestinations}"
-        const val animations =
-            "io.github.raamcosta.compose-destinations:animations-core:${Versions.composeDestinations}"
-        const val ksp = "io.github.raamcosta.compose-destinations:ksp:${Versions.composeDestinations}"
+        object ComposeDestinations {
+            const val core = "io.github.raamcosta.compose-destinations:core:${Versions.composeDestinations}"
+            const val animations =
+                "io.github.raamcosta.compose-destinations:animations-core:${Versions.composeDestinations}"
+            const val ksp = "io.github.raamcosta.compose-destinations:ksp:${Versions.composeDestinations}"
+        }
     }
 
     object Ktor {

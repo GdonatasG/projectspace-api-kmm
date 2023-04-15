@@ -18,7 +18,7 @@ interface HttpClient {
     companion object {
         fun create(
             ignoreTLS: Boolean = false,
-            baseUrl: String,
+            baseUrl: String = "",
         ): HttpClient = KtorHttpClient(
             client = createKtorHttpClient(ignoreTLS), baseUrl = baseUrl
         )

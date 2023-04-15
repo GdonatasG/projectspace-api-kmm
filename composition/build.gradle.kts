@@ -1,11 +1,12 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    kotlin("plugin.serialization") version Versions.kotlin
 }
 
 kotlin {
     android()
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -17,7 +18,20 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation(project(":projectspace-services"))
+                implementation(project(":feature:common"))
+
+                api(project(":feature:authorization"))
+
+                implementation(project(":libraries:logger"))
+                implementation(project(":libraries:preferences"))
+                implementation(project(":libraries:http"))
+
+                implementation(project(":libraries:utils"))
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
@@ -48,9 +62,9 @@ kotlin {
 
 android {
     namespace = "com.project.space.composition"
-    compileSdk = 33
+    compileSdk = Versions.androidCompileSdk
     defaultConfig {
-        minSdk = 24
-        targetSdk = 33
+        minSdk = Versions.androidMinSdk
+        targetSdk = Versions.androidTargetSdk
     }
 }
