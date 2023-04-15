@@ -14,6 +14,15 @@ class TaskServiceSmokeTest {
         println(response.toString())
     }
 
+    @Test
+    fun `test getSessionUserAssignedTasks`() = runTest {
+        val service = makeSUT()
+
+        val response = service.getSessionUserAssignedTasks(projectId = 6)
+
+        println(response.toString())
+    }
+
     // region HELPERS
     private fun makeSUT(): TaskService =
         TaskService(client = createAuthorizedProjectSpaceHttpClient())
