@@ -27,6 +27,8 @@ kotlin {
                 implementation(kotlin("test"))
                 implementation(project(":libraries:test"))
                 implementation(project(":projectspace-services"))
+
+                implementation(project(":libraries:utils"))
             }
         }
         val androidMain by getting
