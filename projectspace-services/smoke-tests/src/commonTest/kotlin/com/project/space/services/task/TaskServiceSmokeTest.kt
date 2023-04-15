@@ -66,6 +66,22 @@ class TaskServiceSmokeTest {
         println(response.toString())
     }
 
+    @Test
+    fun `test updateTask`() = runTest {
+        val service = makeSUT()
+
+        val response = service.updateTask(id = 20) {
+            title("UpdatedNewTask4")
+            description("UpdatedNewTaskDescription4")
+            priorityId(2)
+            startDate(Timestamp(1681553368))
+            endDate(Timestamp(1681553368))
+            assignees(setOf())
+        }
+
+        println(response.toString())
+    }
+
     // region HELPERS
     private fun makeSUT(): TaskService =
         TaskService(client = createAuthorizedProjectSpaceHttpClient())
