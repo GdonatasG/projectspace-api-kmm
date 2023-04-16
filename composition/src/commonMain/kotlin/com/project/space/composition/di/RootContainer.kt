@@ -65,6 +65,7 @@ class RootContainer(
             .addAuthenticationStatusHandler {
                 authorizationStoreManager.clearAuthState()
                 authorizationStoreManager.clearCurrentUser()
+                authorizationStoreManager.clearSelectedProject()
 
                 // TODO: logout
             }

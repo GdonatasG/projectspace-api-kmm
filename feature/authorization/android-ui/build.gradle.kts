@@ -39,10 +39,14 @@ android {
 
 dependencies {
     implementation(project(":feature:authorization"))
+    implementation(project(":android:components"))
+
+    implementation(project(":libraries:utils"))
 
     implementation(Dependencies.Android.coreKtx)
     implementation(Dependencies.Android.appCompat)
     implementation(Dependencies.Android.Compose.material)
+    implementation(Dependencies.Android.Compose.materialIcons)
     implementation(Dependencies.Android.Compose.material3)
     implementation(Dependencies.Android.Compose.activity)
     implementation(Dependencies.Android.Compose.viewModel)
