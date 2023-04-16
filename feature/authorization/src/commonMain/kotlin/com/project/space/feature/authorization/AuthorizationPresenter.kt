@@ -4,5 +4,4 @@ import com.libraries.utils.Presenter
 
 abstract class AuthorizationPresenter : Presenter<AuthorizationView>() {
     abstract fun onLogin(username: String, password: String)
-    abstract fun onModeChange(mode: Mode)
 }

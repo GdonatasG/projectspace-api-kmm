@@ -20,14 +20,6 @@ class DefaultAuthorizationPresenter(
             field = newValue
         }
 
-    private var mode: Mode = Mode.Login
-        private set(newValue) {
-            update(view, newValue)
-            field = newValue
-        }
-
-
-
     private var formErrors: FormErrors = FormErrors.empty()
         private set(newValue) {
             update(view, newValue)
@@ -59,7 +51,7 @@ class DefaultAuthorizationPresenter(
                 state = State.Idle
                 when (response) {
                     is Login.Response.Success -> {
-                        println("SUCCESS!")
+                        onAuthorized()
                     }
                     is Login.Response.Error -> {
                         println(response.message)
@@ -67,10 +59,5 @@ class DefaultAuthorizationPresenter(
                 }
             }
         }
-    }
-
-    override fun onModeChange(mode: Mode) {
-        formErrors = FormErrors.empty()
-        this.mode = mode
     }
 }
