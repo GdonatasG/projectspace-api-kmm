@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.project.space.components.button.FullWidthButton
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AuthorizationScreen(logoResId: Int, viewModel: AuthorizationViewModel) {
     val focusManager = LocalFocusManager.current
@@ -42,9 +42,22 @@ fun AuthorizationScreen(logoResId: Int, viewModel: AuthorizationViewModel) {
     val username by viewModel.username.collectAsState()
     val usernameError by viewModel.usernameError.collectAsState()
 
+    val firstName by viewModel.firstName.collectAsState()
+    val firstNameError by viewModel.firstNameError.collectAsState()
+
+    val lastName by viewModel.lastName.collectAsState()
+    val lastNameError by viewModel.lastNameError.collectAsState()
+
+    val email by viewModel.email.collectAsState()
+    val emailError by viewModel.emailError.collectAsState()
+
     val password by viewModel.password.collectAsState()
     val passwordError by viewModel.passwordError.collectAsState()
     val passwordVisible by viewModel.passwordVisible.collectAsState()
+
+    val passwordRepeat by viewModel.passwordRepeat.collectAsState()
+    val passwordRepeatError by viewModel.passwordRepeatError.collectAsState()
+    val passwordRepeatVisible by viewModel.passwordRepeatVisible.collectAsState()
 
     Scaffold {
         Column(
@@ -97,14 +110,35 @@ fun AuthorizationScreen(logoResId: Int, viewModel: AuthorizationViewModel) {
                             isRegister = selectedTabIndex == 1,
                             username = username,
                             usernameError = usernameError,
+                            firstName = firstName,
+                            firstNameError = firstNameError,
+                            lastName = lastName,
+                            lastNameError = lastNameError,
+                            email = email,
+                            emailError = emailError,
                             password = password,
                             passwordError = passwordError,
                             passwordVisible = passwordVisible,
+                            passwordRepeat = passwordRepeat,
+                            passwordRepeatError = passwordRepeatError,
+                            passwordRepeatVisible = passwordRepeatVisible,
                             isLoading = state is AuthorizationViewModel.ViewState.Loading,
                             focusManager = focusManager,
                             delegate = object : FormDelegate {
                                 override fun onUsernameChanged(value: TextFieldValue) {
                                     viewModel.onUsernameChanged(value)
+                                }
+
+                                override fun onFirstnameChanged(value: TextFieldValue) {
+                                    viewModel.onFirstnameChanged(value)
+                                }
+
+                                override fun onLastnameChanged(value: TextFieldValue) {
+                                    viewModel.onLastnameChanged(value)
+                                }
+
+                                override fun onEmailChanged(value: TextFieldValue) {
+                                    viewModel.onEmailChanged(value)
                                 }
 
                                 override fun onPasswordChanged(value: TextFieldValue) {
@@ -118,11 +152,19 @@ fun AuthorizationScreen(logoResId: Int, viewModel: AuthorizationViewModel) {
                                         return
                                     }
 
-                                    // TODO: register
+                                    viewModel.onRegister()
                                 }
 
                                 override fun onPasswordVisibilityChanged(value: Boolean) {
                                     viewModel.onPasswordVisibilityChanged(value)
+                                }
+
+                                override fun onPasswordRepeatChanged(value: TextFieldValue) {
+                                    viewModel.onPasswordRepeatChanged(value)
+                                }
+
+                                override fun onPasswordRepeatVisibilityChanged(value: Boolean) {
+                                    viewModel.onPasswordRepeatVisibilityChanged(value)
                                 }
 
                             }
@@ -140,9 +182,18 @@ private fun BuildForm(
     isRegister: Boolean,
     username: TextFieldValue,
     usernameError: String?,
+    firstName: TextFieldValue,
+    firstNameError: String?,
+    lastName: TextFieldValue,
+    lastNameError: String?,
+    email: TextFieldValue,
+    emailError: String?,
     password: TextFieldValue,
     passwordError: String?,
     passwordVisible: Boolean,
+    passwordRepeat: TextFieldValue,
+    passwordRepeatError: String?,
+    passwordRepeatVisible: Boolean,
     isLoading: Boolean,
     focusManager: FocusManager,
     delegate: FormDelegate
@@ -164,49 +215,77 @@ private fun BuildForm(
                 focusManager.moveFocus(FocusDirection.Down)
             })
         )
-        if (usernameError != null) {
-            Text(
-                text = usernameError,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.error,
-                textAlign = TextAlign.End
-            )
+        AnimatedVisibility(visible = usernameError != null) {
+            if (usernameError != null) {
+                Text(
+                    text = usernameError,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
         }
         AnimatedVisibility(visible = isRegister) {
-            OutlinedTextField(modifier = Modifier.fillMaxWidth(), value = "", onValueChange = {
-
+            OutlinedTextField(modifier = Modifier.fillMaxWidth(), value = firstName, onValueChange = {
+                delegate.onFirstnameChanged(it)
             }, label = {
-                Text(text = "First name")
-            }, singleLine = true, keyboardOptions = KeyboardOptions.Default.copy(
+                Text(text = "First name (required)")
+            }, singleLine = true, isError = firstNameError != null, keyboardOptions = KeyboardOptions.Default.copy(
                 imeAction = ImeAction.Next
             ), keyboardActions = KeyboardActions(onNext = {
                 focusManager.moveFocus(FocusDirection.Down)
             })
             )
         }
+        AnimatedVisibility(visible = isRegister && firstNameError != null) {
+            if (firstNameError != null) {
+                Text(
+                    text = firstNameError,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
+        }
         AnimatedVisibility(visible = isRegister) {
-            OutlinedTextField(modifier = Modifier.fillMaxWidth(), value = "", onValueChange = {
-
+            OutlinedTextField(modifier = Modifier.fillMaxWidth(), value = lastName, onValueChange = {
+                delegate.onLastnameChanged(it)
             }, label = {
-                Text(text = "Last name")
-            }, singleLine = true, keyboardOptions = KeyboardOptions.Default.copy(
+                Text(text = "Last name (required)")
+            }, singleLine = true, isError = lastNameError != null, keyboardOptions = KeyboardOptions.Default.copy(
                 imeAction = ImeAction.Next
             ), keyboardActions = KeyboardActions(onNext = {
                 focusManager.moveFocus(FocusDirection.Down)
             })
             )
         }
+        AnimatedVisibility(visible = isRegister && lastNameError != null) {
+            if (lastNameError != null) {
+                Text(
+                    text = lastNameError,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
+        }
         AnimatedVisibility(visible = isRegister) {
-            OutlinedTextField(modifier = Modifier.fillMaxWidth(), value = "", onValueChange = {
-
+            OutlinedTextField(modifier = Modifier.fillMaxWidth(), value = email, onValueChange = {
+                delegate.onEmailChanged(it)
             }, label = {
                 Text(text = "Email (required)")
-            }, singleLine = true, keyboardOptions = KeyboardOptions.Default.copy(
+            }, singleLine = true, isError = emailError != null,keyboardOptions = KeyboardOptions.Default.copy(
                 imeAction = ImeAction.Next
             ), keyboardActions = KeyboardActions(onNext = {
                 focusManager.moveFocus(FocusDirection.Down)
             })
             )
+        }
+        AnimatedVisibility(visible = isRegister && emailError != null) {
+            if (emailError != null) {
+                Text(
+                    text = emailError,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
         }
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
@@ -241,25 +320,26 @@ private fun BuildForm(
                     focusManager.moveFocus(FocusDirection.Down)
             })
         )
-        if (passwordError != null) {
-            Text(
-                text = passwordError,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.error,
-                textAlign = TextAlign.End
-            )
+        AnimatedVisibility(visible = passwordError != null) {
+            if (passwordError != null) {
+                Text(
+                    text = passwordError,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
         }
         AnimatedVisibility(visible = isRegister) {
-            var passwordRepeatVisible by remember { mutableStateOf(false) }
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
-                value = "",
+                value = passwordRepeat,
                 onValueChange = {
-
+                    delegate.onPasswordRepeatChanged(it)
                 },
                 label = {
                     Text(text = "Repeat password (required)")
                 },
+                isError = passwordRepeatError != null,
                 visualTransformation = if (passwordRepeatVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 trailingIcon = {
@@ -270,12 +350,21 @@ private fun BuildForm(
                     val description = if (passwordRepeatVisible) "Hide password" else "Show password"
 
                     // Toggle button to hide or display password
-                    IconButton(onClick = { passwordRepeatVisible = !passwordRepeatVisible }) {
+                    IconButton(onClick = { delegate.onPasswordRepeatVisibilityChanged(!passwordRepeatVisible) }) {
                         Icon(imageVector = image, description)
                     }
                 },
                 singleLine = true
             )
+        }
+        AnimatedVisibility(visible = isRegister && passwordRepeatError != null) {
+            if (passwordRepeatError != null) {
+                Text(
+                    text = passwordRepeatError,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
         }
         Spacer(modifier = Modifier.height(24.dp))
         FullWidthButton(title = if (isRegister) "Register" else "Login", isLoading = isLoading) {
@@ -286,8 +375,13 @@ private fun BuildForm(
 
 private interface FormDelegate {
     fun onUsernameChanged(value: TextFieldValue)
+    fun onFirstnameChanged(value: TextFieldValue)
+    fun onLastnameChanged(value: TextFieldValue)
+    fun onEmailChanged(value: TextFieldValue)
     fun onPasswordChanged(value: TextFieldValue)
     fun onPasswordVisibilityChanged(value: Boolean)
+    fun onPasswordRepeatChanged(value: TextFieldValue)
+    fun onPasswordRepeatVisibilityChanged(value: Boolean)
     fun onAction()
 }
 

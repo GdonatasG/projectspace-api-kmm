@@ -20,14 +20,29 @@ class AuthorizationViewModel(
     private val _state: MutableStateFlow<ViewState> = MutableStateFlow(ViewState.Idle)
     val state: StateFlow<ViewState> get() = _state.asStateFlow()
 
-    private val _viewMode: MutableStateFlow<ViewMode> = MutableStateFlow(ViewMode.LOGIN)
-    val viewMode: StateFlow<ViewMode> get() = _viewMode.asStateFlow()
-
     private val _username: MutableStateFlow<TextFieldValue> = MutableStateFlow(TextFieldValue())
     val username: StateFlow<TextFieldValue> get() = _username.asStateFlow()
 
     private val _usernameError: MutableStateFlow<String?> = MutableStateFlow(null)
     val usernameError: StateFlow<String?> = _usernameError.asStateFlow()
+
+    private val _firstName: MutableStateFlow<TextFieldValue> = MutableStateFlow(TextFieldValue())
+    val firstName: StateFlow<TextFieldValue> get() = _firstName.asStateFlow()
+
+    private val _firstNameError: MutableStateFlow<String?> = MutableStateFlow(null)
+    val firstNameError: StateFlow<String?> = _firstNameError.asStateFlow()
+
+    private val _lastName: MutableStateFlow<TextFieldValue> = MutableStateFlow(TextFieldValue())
+    val lastName: StateFlow<TextFieldValue> get() = _lastName.asStateFlow()
+
+    private val _lastNameError: MutableStateFlow<String?> = MutableStateFlow(null)
+    val lastNameError: StateFlow<String?> = _lastNameError.asStateFlow()
+
+    private val _email: MutableStateFlow<TextFieldValue> = MutableStateFlow(TextFieldValue())
+    val email: StateFlow<TextFieldValue> get() = _email.asStateFlow()
+
+    private val _emailError: MutableStateFlow<String?> = MutableStateFlow(null)
+    val emailError: StateFlow<String?> = _emailError.asStateFlow()
 
     private val _password: MutableStateFlow<TextFieldValue> = MutableStateFlow(TextFieldValue())
     val password: StateFlow<TextFieldValue> get() = _password.asStateFlow()
@@ -37,6 +52,15 @@ class AuthorizationViewModel(
 
     private val _passwordVisible: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val passwordVisible: StateFlow<Boolean> get() = _passwordVisible.asStateFlow()
+
+    private val _passwordRepeat: MutableStateFlow<TextFieldValue> = MutableStateFlow(TextFieldValue())
+    val passwordRepeat: StateFlow<TextFieldValue> get() = _passwordRepeat.asStateFlow()
+
+    private val _passwordRepeatError: MutableStateFlow<String?> = MutableStateFlow(null)
+    val passwordRepeatError: StateFlow<String?> = _passwordRepeatError.asStateFlow()
+
+    private val _passwordRepeatVisible: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val passwordRepeatVisible: StateFlow<Boolean> get() = _passwordRepeatVisible.asStateFlow()
 
     init {
         presenter.setView(this)
@@ -49,13 +73,22 @@ class AuthorizationViewModel(
 
     private fun resetFormFields() {
         _username.value = TextFieldValue()
+        _firstName.value = TextFieldValue()
+        _lastName.value = TextFieldValue()
+        _email.value = TextFieldValue()
         _password.value = TextFieldValue()
         _passwordVisible.value = false
+        _passwordRepeat.value = TextFieldValue()
+        _passwordRepeatVisible.value = false
     }
 
     override fun display(state: FormErrors) {
         _usernameError.value = state.usernameError
+        _firstNameError.value = state.firstNameError
+        _lastNameError.value = state.lastNameError
+        _emailError.value = state.emailError
         _passwordError.value = state.passwordError
+        _passwordRepeatError.value = state.passwordRepeatError
     }
 
     override fun onChangeModeToLogin() {
@@ -67,6 +100,17 @@ class AuthorizationViewModel(
         presenter.onLogin(username = username.value.text, password = password.value.text)
     }
 
+    fun onRegister() {
+        presenter.onRegister(
+            username = username.value.text,
+            firstName = _firstName.value.text,
+            lastName = _lastName.value.text,
+            email = _email.value.text,
+            password = _password.value.text,
+            passwordRepeat = _passwordRepeat.value.text
+        )
+    }
+
     fun onModeChange(index: Int) {
         _selectedTabIndex.value = index
     }
@@ -75,12 +119,32 @@ class AuthorizationViewModel(
         _username.value = value
     }
 
+    fun onFirstnameChanged(value: TextFieldValue) {
+        _firstName.value = value
+    }
+
+    fun onLastnameChanged(value: TextFieldValue) {
+        _lastName.value = value
+    }
+
+    fun onEmailChanged(value: TextFieldValue) {
+        _email.value = value
+    }
+
     fun onPasswordChanged(value: TextFieldValue) {
         _password.value = value
     }
 
     fun onPasswordVisibilityChanged(value: Boolean) {
         _passwordVisible.value = value
+    }
+
+    fun onPasswordRepeatChanged(value: TextFieldValue) {
+        _passwordRepeat.value = value
+    }
+
+    fun onPasswordRepeatVisibilityChanged(value: Boolean) {
+        _passwordRepeatVisible.value = value
     }
 
     override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
@@ -106,9 +170,5 @@ class AuthorizationViewModel(
             State.Idle -> ViewState.Idle
             State.Loading -> ViewState.Loading
         }
-    }
-
-    enum class ViewMode(val title: String) {
-        LOGIN("Login"), REGISTER("Register")
     }
 }

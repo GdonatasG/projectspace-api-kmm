@@ -3,10 +3,12 @@ package com.project.space.feature.authorization
 import com.libraries.utils.PlatformScopeManager
 import com.libraries.utils.ViewHolder
 import com.project.space.feature.authorization.domain.Login
+import com.project.space.feature.authorization.domain.Register
 
 class DefaultAuthorizationPresenter(
     private val scope: PlatformScopeManager = PlatformScopeManager(),
     private val login: Login,
+    private val register: Register,
     private val onAuthorized: () -> Unit
 ) : AuthorizationPresenter() {
     override var viewHolder: ViewHolder<AuthorizationView> = ViewHolder()
@@ -45,7 +47,7 @@ class DefaultAuthorizationPresenter(
             formErrors = formErrors.copy(passwordError = "Password must not be empty!")
         }
 
-        if (username.trim().isNotBlank() && password.trim().isNotBlank()) {
+        if (formErrors.isValid()) {
             state = State.Loading
             login(username = username, password = password) { response ->
                 state = State.Idle
@@ -60,4 +62,94 @@ class DefaultAuthorizationPresenter(
             }
         }
     }
+
+    override fun onRegister(
+        username: String,
+        firstName: String,
+        lastName: String,
+        email: String,
+        password: String,
+        passwordRepeat: String
+    ) {
+        formErrors = FormErrors.empty()
+        if (username.trim().isBlank()) {
+            formErrors = formErrors.copy(usernameError = "Username must not be empty!")
+        }
+
+        if (firstName.trim().isBlank()) {
+            formErrors = formErrors.copy(firstNameError = "Firstname must not be empty!")
+        }
+
+        if (lastName.trim().isBlank()) {
+            formErrors = formErrors.copy(lastNameError = "Firstname must not be empty!")
+        }
+
+        if (!isEmailValid(email)) {
+            formErrors = formErrors.copy(emailError = "Email is not valid!")
+        }
+
+        if (password.trim() != password) {
+            formErrors = formErrors.copy(passwordError = "Password must not contain whitespaces!")
+        }
+
+        if (password.trim().isBlank()) {
+            formErrors = formErrors.copy(passwordError = "Password must not be empty!")
+        }
+
+        if (password != passwordRepeat) {
+            formErrors = formErrors.copy(passwordRepeatError = "Passwords does not match!")
+        }
+
+        if (formErrors.isValid()) {
+            state = State.Loading
+
+            register(
+                username = username,
+                firstName = firstName,
+                lastName = lastName,
+                email = email,
+                password = password
+            ) { response ->
+                state = State.Idle
+                when (response) {
+                    is Register.Response.Success -> {
+                        view?.onChangeModeToLogin()
+                        println("REGISTERED!")
+                        // TODO: show success alert
+                    }
+                    is Register.Response.InputErrors -> {
+                        response.data.forEach { error ->
+                            when (error.input) {
+                                "username" -> {
+                                    formErrors = formErrors.copy(usernameError = error.message)
+                                }
+                                "first_name" -> {
+                                    formErrors = formErrors.copy(firstNameError = error.message)
+                                }
+                                "last_name" -> {
+                                    formErrors = formErrors.copy(lastNameError = error.message)
+                                }
+                                "email" -> {
+                                    formErrors = formErrors.copy(emailError = error.message)
+                                }
+                                "password" -> {
+                                    formErrors = formErrors.copy(passwordError = error.message)
+                                }
+                            }
+                        }
+                    }
+                    is Register.Response.Error -> {
+                        println(response.message)
+                    }
+                }
+            }
+        }
+
+    }
+
+    private fun isEmailValid(email: String): Boolean {
+        val emailRegex = Regex("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")
+        return emailRegex.matches(email)
+    }
+
 }
