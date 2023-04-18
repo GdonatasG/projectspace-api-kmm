@@ -4,7 +4,7 @@ import androidx.navigation.NavOptions
 import com.project.space.components.navigation.NavigationAction
 import com.project.space.components.navigation.Navigator
 import com.project.space.feature.authorization.AuthorizationPresenter
-import com.project.space.presentation.screen.destinations.AuthorizationScreenDestination
+import com.project.space.presentation.destinations.AuthorizationScreenDestination
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 

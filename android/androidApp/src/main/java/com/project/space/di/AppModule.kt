@@ -20,7 +20,8 @@ val commonModule = module {
     factory {
         val flow = RootFlow(
             container = get(),
-            navigator = get()
+            navigator = get(),
+            alert = get()
         )
         val scope = SplashScope(flow = flow)
         scope.createSplashPresenter()

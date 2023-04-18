@@ -1,5 +1,6 @@
 package com.project.space.composition.di.authorization
 
+import com.libraries.alerts.Alert
 import com.libraries.utils.PlatformScopeManager
 import com.project.space.composition.di.authorization.usecase.LoginUseCase
 import com.project.space.composition.di.authorization.usecase.RegisterUseCase
@@ -34,11 +35,13 @@ class AuthorizationContainer(
         )
     }
 
-    fun presenter(onAuthorized: () -> Unit): AuthorizationPresenter = DefaultAuthorizationPresenter(
-        scope = scope,
-        login = loginUseCase,
-        register = registerUseCase,
-        onAuthorized = onAuthorized
-    )
+    fun presenter(alert: Alert.Coordinator, onAuthorized: () -> Unit): AuthorizationPresenter =
+        DefaultAuthorizationPresenter(
+            scope = scope,
+            alert = alert,
+            login = loginUseCase,
+            register = registerUseCase,
+            onAuthorized = onAuthorized
+        )
 
 }

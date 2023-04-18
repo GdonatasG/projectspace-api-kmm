@@ -1,5 +1,6 @@
 package com.project.space.feature.authorization
 
+import com.libraries.alerts.Alert
 import com.libraries.utils.PlatformScopeManager
 import com.libraries.utils.ViewHolder
 import com.project.space.feature.authorization.domain.Login
@@ -7,6 +8,7 @@ import com.project.space.feature.authorization.domain.Register
 
 class DefaultAuthorizationPresenter(
     private val scope: PlatformScopeManager = PlatformScopeManager(),
+    private val alert: Alert.Coordinator,
     private val login: Login,
     private val register: Register,
     private val onAuthorized: () -> Unit
@@ -56,7 +58,15 @@ class DefaultAuthorizationPresenter(
                         onAuthorized()
                     }
                     is Login.Response.Error -> {
-                        println(response.message)
+                        alert.show(Alert {
+                            title = "Failed!"
+                            message = response.message
+                            buttons = listOf(Alert.Button {
+                                title = "Ok"
+                                event = Alert.Button.Event.DESTRUCTIVE
+                                onClick = {}
+                            })
+                        })
                     }
                 }
             }
@@ -114,12 +124,30 @@ class DefaultAuthorizationPresenter(
                 when (response) {
                     is Register.Response.Success -> {
                         view?.onChangeModeToLogin()
-                        println("REGISTERED!")
-                        // TODO: show success alert
+                        alert.show(Alert {
+                            title = "Registration successful!"
+                            message = "You have successfully registered. Now you can login."
+                            buttons = listOf(Alert.Button {
+                                title = "Ok"
+                                event = Alert.Button.Event.DESTRUCTIVE
+                                onClick = {}
+                            })
+                        })
                     }
                     is Register.Response.InputErrors -> {
                         response.data.forEach { error ->
                             when (error.input) {
+                                "entity" -> {
+                                    alert.show(Alert {
+                                        title = "Failed!"
+                                        message = error.message
+                                        buttons = listOf(Alert.Button {
+                                            title = "Ok"
+                                            event = Alert.Button.Event.DESTRUCTIVE
+                                            onClick = {}
+                                        })
+                                    })
+                                }
                                 "username" -> {
                                     formErrors = formErrors.copy(usernameError = error.message)
                                 }
@@ -139,7 +167,15 @@ class DefaultAuthorizationPresenter(
                         }
                     }
                     is Register.Response.Error -> {
-                        println(response.message)
+                        alert.show(Alert {
+                            title = "Failed!"
+                            message = response.message
+                            buttons = listOf(Alert.Button {
+                                title = "Ok"
+                                event = Alert.Button.Event.DESTRUCTIVE
+                                onClick = {}
+                            })
+                        })
                     }
                 }
             }

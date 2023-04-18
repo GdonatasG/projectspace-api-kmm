@@ -10,9 +10,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalUriHandler
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
+import com.libraries.alerts.AlertController
 import com.project.space.components.navigation.BackStackHandler
+import com.project.space.components.navigation.NavigationAction
 import com.project.space.components.navigation.Navigator
-import com.project.space.presentation.screen.NavGraphs
+import com.project.space.presentation.NavGraphs
+import com.project.space.presentation.destinations.AlertDestination
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.animations.defaults.RootNavGraphDefaultAnimations
 import com.ramcosta.composedestinations.animations.rememberAnimatedNavHostEngine
@@ -23,7 +26,7 @@ import org.koin.androidx.compose.get
 @Composable
 fun BaseNavigation(
     navigator: Navigator = get(),
-   /* alertController: AlertController,*/
+    alertController: AlertController = get()
 ) {
     val navEngine =
         rememberAnimatedNavHostEngine(rootDefaultAnimations = RootNavGraphDefaultAnimations.ACCOMPANIST_FADING)
@@ -32,9 +35,9 @@ fun BaseNavigation(
 
     val navActions by navigator.navActions.collectAsState()
 
-   /* val alertAction by alertController.navigationAction.collectAsState()
+    val alertAction by alertController.navigationAction.collectAsState()
 
-    val closeAlertAction by alertController.closeAlert.collectAsState()*/
+    val closeAlertAction by alertController.closeAlert.collectAsState()
 
     val navigateBack by navigator.navigateBackAction.collectAsState()
 
@@ -71,19 +74,19 @@ fun BaseNavigation(
         }
     }
 
-   /* LaunchedEffect(alertAction) {
+    LaunchedEffect(alertAction) {
         alertAction?.let {
             navigator.navigate(NavigationAction(AlertDestination))
             alertController.resetNavigationAction()
         }
-    }*/
+    }
 
-    /*LaunchedEffect(closeAlertAction) {
+    LaunchedEffect(closeAlertAction) {
         closeAlertAction?.let {
             navHostController.popBackStack()
             alertController.resetCloseAction()
         }
-    }*/
+    }
 
     Scaffold {
         DestinationsNavHost(
