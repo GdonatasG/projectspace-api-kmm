@@ -17,6 +17,6 @@ class RootFlow(
             ).start()
         }
 
-        // TODO: start main
+        navigator.startMain()
     }
 }

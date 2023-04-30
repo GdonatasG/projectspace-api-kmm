@@ -11,8 +11,7 @@ class AuthorizationFlow(
     fun start() {
         val container = container.authorization()
         val presenter = container.presenter(alert = alert) {
-            // TODO: navigate to main
-            println("AUTHORIZED!")
+            navigator.startMain()
         }
 
         navigator.startAuthorization(presenter = presenter)
