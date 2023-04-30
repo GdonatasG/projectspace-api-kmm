@@ -66,6 +66,7 @@ fun AuthorizationScreen(logoResId: Int, viewModel: AuthorizationViewModel) {
                 .statusBarsPadding()
                 .navigationBarsPadding()
                 .imePadding()
+                .captionBarPadding()
         ) {
             TabRow(
                 selectedTabIndex = selectedTabIndex,

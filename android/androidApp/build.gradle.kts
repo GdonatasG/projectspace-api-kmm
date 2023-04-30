@@ -52,6 +52,7 @@ dependencies {
 
     implementation(Dependencies.Android.Accompanist.flowLayout)
     implementation(Dependencies.Android.Compose.material3)
+    implementation(Dependencies.Android.Compose.materialIcons)
     implementation(Dependencies.Android.Compose.activity)
     implementation(Dependencies.Android.ComposeDestinations.core)
     implementation(Dependencies.Android.ComposeDestinations.animations)

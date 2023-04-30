@@ -4,6 +4,7 @@ import com.project.space.feature.authorization.AuthorizationPresenter
 
 interface Navigator {
     fun startAuthorization(presenter: AuthorizationPresenter)
+    fun startMain()
 
     fun pop()
 }
