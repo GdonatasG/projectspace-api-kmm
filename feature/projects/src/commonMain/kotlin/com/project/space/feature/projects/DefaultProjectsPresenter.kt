@@ -1,12 +1,21 @@
 package com.project.space.feature.projects
 
+import com.libraries.alerts.Alert
 import com.libraries.utils.PlatformScopeManager
 import com.libraries.utils.ViewHolder
+import com.libraries.utils.observer.Observable
+import com.libraries.utils.observer.Observer
+import com.project.space.feature.common.domain.model.SelectedProject
 import com.project.space.feature.projects.domain.GetProjects
+import com.project.space.feature.projects.domain.Project
+import com.project.space.feature.projects.domain.SetSelectedProject
 
 class DefaultProjectsPresenter(
     private val scope: PlatformScopeManager,
-    private val getProjects: GetProjects
+    private val getProjects: GetProjects,
+    private val setProject: SetSelectedProject,
+    private val alert: Alert.Coordinator,
+    private val selectedProjectObservable: Observable<SelectedProject?>
 ) : ProjectsPresenter() {
     override var viewHolder: ViewHolder<ProjectsView> = ViewHolder()
 
@@ -21,13 +30,59 @@ class DefaultProjectsPresenter(
 
     private var tab: Tab = Tab.MY_PROJECTS
 
+    private var selectedProject: SelectedProject? = null
+
+    private val selectedProjectObserver: Observer<SelectedProject?> = object : Observer<SelectedProject?> {
+        override fun update(value: SelectedProject?) {
+            selectedProject = value
+            updateSelectedProject()
+        }
+    }
+
+    private fun updateSelectedProject() {
+        if (state !is State.Content) return
+
+        state = State.Content(data = (state as State.Content).data.map { project ->
+            project.copy(
+                selected = selectedProject?.id == project.id
+            )
+        })
+
+
+    }
+
     override fun onAppear() {
         super.onAppear()
         _getProjects()
     }
 
+    override fun onResume() {
+        super.onResume()
+        selectedProjectObservable.add(selectedProjectObserver)
+    }
+
+    override fun onDisappear() {
+        super.onDisappear()
+        selectedProjectObservable.remove(selectedProjectObserver)
+    }
+
     override fun onRetry() {
         _getProjects()
+    }
+
+    override fun setSelectedProject(project: Project) {
+        if (project.selected) return
+
+        alert.show(Alert {
+            title = "Change current project to ${project.name}?"
+            buttons = listOf(Alert.Button.Cancel(), Alert.Button {
+                title = "Change"
+                event = Alert.Button.Event.DESTRUCTIVE
+                onClick = {
+                    setProject(project)
+                }
+            })
+        })
     }
 
     private fun _getProjects() {
@@ -48,6 +103,7 @@ class DefaultProjectsPresenter(
                     }
 
                     state = State.Content(data = projects)
+                    updateSelectedProject()
                 }
                 is GetProjects.Response.Error -> {
                     state = State.Error(title = "Unable to load projects!", message = response.message)

@@ -1,5 +1,7 @@
 package com.project.space.feature.projects
 
+import com.project.space.feature.common.domain.model.SelectedProject
+
 actual interface ProjectsView {
     fun display(projectsViewViewStateLoading: State.Loading)
     fun display(projectsViewViewStateContent: State.Content)

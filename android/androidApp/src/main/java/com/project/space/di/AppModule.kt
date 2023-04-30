@@ -16,7 +16,8 @@ import org.koin.dsl.module
 val commonModule = module {
     single {
         RootContainer(
-            navigator = get()
+            navigator = get(),
+            alert = get()
         )
     }
 
@@ -49,7 +50,7 @@ val bottomNavigationModule = module {
 
     viewModel {
         val container: ProjectsContainer = get()
-        val presenter: ProjectsPresenter = container.presenter()
+        val presenter: ProjectsPresenter = container.presenter(alert = get())
 
         ProjectsViewModel(presenter = presenter)
     }

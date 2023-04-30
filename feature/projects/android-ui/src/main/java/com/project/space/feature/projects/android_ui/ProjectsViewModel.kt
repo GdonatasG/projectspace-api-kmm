@@ -4,6 +4,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
+import com.project.space.feature.common.domain.model.SelectedProject
 import com.project.space.feature.projects.ProjectsPresenter
 import com.project.space.feature.projects.ProjectsView
 import com.project.space.feature.projects.State
@@ -22,6 +23,10 @@ class ProjectsViewModel(
     val state: StateFlow<ViewState>
         get() = _state.asStateFlow()
 
+    private val _selectedProject: MutableStateFlow<SelectedProject?> = MutableStateFlow(null)
+    val selectedProject: StateFlow<SelectedProject?>
+        get() = _selectedProject.asStateFlow()
+
     init {
         presenter.setView(this)
         presenter.onAppear()
@@ -35,8 +40,12 @@ class ProjectsViewModel(
         presenter.onTabChange(tab)
     }
 
-    fun onRetry(){
+    fun onRetry() {
         presenter.onRetry()
+    }
+
+    fun setSelectedProject(project: Project) {
+        presenter.setSelectedProject(project)
     }
 
     override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {

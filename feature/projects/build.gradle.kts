@@ -1,6 +1,7 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    kotlin("plugin.serialization") version Versions.kotlin
 }
 
 kotlin {
@@ -19,6 +20,11 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(Dependencies.KotlinX.serializationCore)
+
+                api(project(":feature:common"))
+
+                implementation(project(":libraries:alerts"))
                 implementation(project(":libraries:utils"))
             }
         }

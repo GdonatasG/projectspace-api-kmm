@@ -20,6 +20,8 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(Dependencies.KotlinX.serializationCore)
+
                 implementation(project(":projectspace-services"))
                 implementation(project(":feature:common"))
 

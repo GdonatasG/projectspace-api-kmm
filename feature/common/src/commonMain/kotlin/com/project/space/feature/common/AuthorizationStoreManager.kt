@@ -1,4 +1,4 @@
-package com.project.space.feature.common.domain
+package com.project.space.feature.common
 
 import com.project.space.feature.common.domain.model.AuthorizationState
 import com.project.space.feature.common.domain.model.CurrentUser
@@ -11,7 +11,4 @@ interface AuthorizationStoreManager {
     fun setCurrentUser(currentUser: CurrentUser)
     fun clearCurrentUser()
     fun getCurrentUser(): CurrentUser?
-    fun setSelectedProject(selectedProject: SelectedProject)
-    fun clearSelectedProject()
-    fun getSelectedProject(): SelectedProject?
 }

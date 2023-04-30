@@ -1,5 +1,6 @@
 package com.project.space.feature.projects
 
+import com.project.space.feature.common.domain.model.SelectedProject
 import com.project.space.feature.projects.domain.Project
 
 sealed class State {
@@ -11,4 +12,5 @@ sealed class State {
 
 internal expect fun update(view: ProjectsView?, state: State)
 
-expect interface ProjectsView
+expect interface ProjectsView {
+}

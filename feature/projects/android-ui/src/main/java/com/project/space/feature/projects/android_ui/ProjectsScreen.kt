@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowRight
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -25,6 +26,7 @@ fun ProjectsScreen(viewModel: ProjectsViewModel) {
     val tabs: List<String> = listOf("My projects", "Others")
 
     val state by viewModel.state.collectAsState()
+    val selectedProject by viewModel.selectedProject.collectAsState()
 
     Scaffold {
         Column(
@@ -49,31 +51,26 @@ fun ProjectsScreen(viewModel: ProjectsViewModel) {
                     Tab(text = { Text(title) }, selected = index == selectedTabIndex, onClick = {
                         selectedTabIndex = index
                         viewModel.onTabChange(
-                            if (selectedTabIndex == 0)
-                                com.project.space.feature.projects.Tab.MY_PROJECTS
-                            else
-                                com.project.space.feature.projects.Tab.OTHERS
+                            if (selectedTabIndex == 0) com.project.space.feature.projects.Tab.MY_PROJECTS
+                            else com.project.space.feature.projects.Tab.OTHERS
                         )
                     })
                 }
             }
             when (val type = state) {
-                is ProjectsViewModel.ViewState.Content -> Content(data = type.data,
+                is ProjectsViewModel.ViewState.Content -> Content(
+                    data = type.data,
                     delegate = object : ContentDelegate {
                         override fun onProjectClick(project: Project) {
-
+                            viewModel.setSelectedProject(project)
                         }
                     })
                 is ProjectsViewModel.ViewState.Loading -> LoadingView()
                 is ProjectsViewModel.ViewState.Empty -> EmptyView(
-                    title = type.title,
-                    message = type.message,
-                    onRefresh = viewModel::onRetry
+                    title = type.title, message = type.message, onRefresh = viewModel::onRetry
                 )
                 is ProjectsViewModel.ViewState.Error -> ErrorView(
-                    title = type.title,
-                    message = type.message,
-                    onRetry = viewModel::onRetry
+                    title = type.title, message = type.message, onRetry = viewModel::onRetry
                 )
             }
         }
@@ -86,15 +83,19 @@ private fun Content(data: List<Project>, delegate: ContentDelegate) {
         itemsIndexed(data, key = { _, project ->
             project.id
         }) { index, project ->
-            ListTile(
-                title = project.name,
+            ListTile(title = project.name,
                 description = project.description.ifEmpty { null },
                 divided = index < data.size - 1,
-                trailing = { Image(imageVector = Icons.Default.ArrowRight, contentDescription = "Change project") },
+                trailing = {
+                    if (!project.selected) {
+                        Image(imageVector = Icons.Default.ArrowRight, contentDescription = "Change project")
+                    } else {
+                        Image(imageVector = Icons.Default.Check, contentDescription = "Selected project")
+                    }
+                },
                 onClick = {
                     delegate.onProjectClick(project)
-                }
-            )
+                })
         }
     }
 }

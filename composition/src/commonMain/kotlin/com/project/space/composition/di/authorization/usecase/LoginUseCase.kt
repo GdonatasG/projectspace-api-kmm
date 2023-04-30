@@ -3,7 +3,7 @@ package com.project.space.composition.di.authorization.usecase
 import com.libraries.utils.PlatformScopeManager
 import com.project.space.composition.utils.mapper.toDomain
 import com.project.space.feature.authorization.domain.Login
-import com.project.space.feature.common.domain.AuthorizationStoreManager
+import com.project.space.feature.common.AuthorizationStoreManager
 import com.project.space.feature.common.domain.model.AuthorizationState
 import com.project.space.services.auth.AuthService
 import com.project.space.services.common.ProjectSpaceResult
