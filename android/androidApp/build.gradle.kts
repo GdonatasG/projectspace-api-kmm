@@ -44,9 +44,11 @@ dependencies {
     implementation(project(":android:components"))
 
     implementation(project(":feature:common"))
+
     implementation(project(":feature:splashscreen"))
     implementation(project(":feature:splashscreen:android-ui"))
     implementation(project(":feature:authorization:android-ui"))
+    implementation(project(":feature:projects:android-ui"))
 
     ksp(Dependencies.Android.ComposeDestinations.ksp)
 

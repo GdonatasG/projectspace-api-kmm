@@ -9,6 +9,7 @@ import com.libraries.logger.NapierLogger
 import com.libraries.preferences.Preferences
 import com.libraries.utils.isDebug
 import com.project.space.composition.di.authorization.AuthorizationContainer
+import com.project.space.composition.di.projects.ProjectsContainer
 import com.project.space.composition.navigation.Navigator
 import com.project.space.feature.common.domain.model.AuthorizationState
 import com.project.space.feature.common.domain.AuthorizationStoreManager
@@ -82,4 +83,6 @@ class RootContainer(
         authService = authService,
         userService = userService
     )
+
+    fun projects(): ProjectsContainer = ProjectsContainer()
 }
