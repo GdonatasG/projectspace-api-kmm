@@ -21,6 +21,7 @@ import com.project.space.services.common.http.ProjectSpaceHttpClient
 import com.project.space.services.common.http.interceptor.addAuthenticationStatusHandler
 import com.project.space.services.common.http.interceptor.addAuthorizationHandler
 import com.project.space.services.common.http.interceptor.baseUrl
+import com.project.space.services.project.ProjectService
 import com.project.space.services.user.UserService
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
@@ -47,8 +48,7 @@ class RootContainer(
     }
 
     private val authorizationHttpClient: ProjectSpaceHttpClient by lazy {
-        DefaultProjectSpaceHttpClient(client = httpClient)
-            .baseUrl(Config.BASE_URL)
+        DefaultProjectSpaceHttpClient(client = httpClient).baseUrl(Config.BASE_URL)
     }
 
     private val authService: AuthService by lazy {
@@ -58,18 +58,15 @@ class RootContainer(
     }
 
     private val spaceHttpClient: ProjectSpaceHttpClient by lazy {
-        DefaultProjectSpaceHttpClient(client = httpClient)
-            .baseUrl(Config.BASE_URL)
-            .addAuthorizationHandler {
+        DefaultProjectSpaceHttpClient(client = httpClient).baseUrl(Config.BASE_URL).addAuthorizationHandler {
                 Token(TokenType.BEARER, authorizationStoreManager.getAuthState()?.accessToken ?: "")
-            }
-            .addAuthenticationStatusHandler {
+            }.addAuthenticationStatusHandler(onUnauthorized = {
                 authorizationStoreManager.clearAuthState()
                 authorizationStoreManager.clearCurrentUser()
                 authorizationStoreManager.clearSelectedProject()
 
                 // TODO: logout
-            }
+            })
     }
 
     private val userService: UserService by lazy {
@@ -78,11 +75,15 @@ class RootContainer(
         )
     }
 
+    private val projectService: ProjectService by lazy {
+        ProjectService(
+            client = spaceHttpClient
+        )
+    }
+
     fun authorization(): AuthorizationContainer = AuthorizationContainer(
-        authorizationStoreManager = authorizationStoreManager,
-        authService = authService,
-        userService = userService
+        authorizationStoreManager = authorizationStoreManager, authService = authService, userService = userService
     )
 
-    fun projects(): ProjectsContainer = ProjectsContainer()
+    fun projects(): ProjectsContainer = ProjectsContainer(projectService = projectService)
 }

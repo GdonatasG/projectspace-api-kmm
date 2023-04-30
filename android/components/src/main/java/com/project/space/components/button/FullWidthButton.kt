@@ -17,7 +17,13 @@ import com.project.space.components.theme.primaryColor
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun FullWidthButton(title: String, isLoading: Boolean = false, isEnabled: Boolean = true, onClick: () -> Unit) {
+fun FullWidthButton(
+    modifier: Modifier = Modifier,
+    title: String,
+    isLoading: Boolean = false,
+    isEnabled: Boolean = true,
+    onClick: () -> Unit
+) {
     val focusManager = LocalFocusManager.current
 
     val enabled = isEnabled && !isLoading
@@ -25,7 +31,7 @@ fun FullWidthButton(title: String, isLoading: Boolean = false, isEnabled: Boolea
     val disabledAlpha: Float = if (isSystemInDarkTheme()) 0.4f else 0.6f
 
     ElevatedButton(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .defaultMinSize(minHeight = 48.dp),
         enabled = enabled,
