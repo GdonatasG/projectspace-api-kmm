@@ -75,12 +75,10 @@ fun AuthorizationScreen(logoResId: Int, viewModel: AuthorizationViewModel) {
                 else TabRowDefaults.contentColor.copy(alpha = 0.6f)
             ) {
                 tabs.forEachIndexed { index, title ->
-                    Tab(
-                        text = { Text(title) }, selected = index == selectedTabIndex,
-                        onClick = {
-                            focusManager.clearFocus(true)
-                            viewModel.onModeChange(index)
-                        }, enabled = state != AuthorizationViewModel.ViewState.Loading
+                    Tab(text = { Text(title) }, selected = index == selectedTabIndex, onClick = {
+                        focusManager.clearFocus(true)
+                        viewModel.onModeChange(index)
+                    }, enabled = state != AuthorizationViewModel.ViewState.Loading
                     )
                 }
             }
@@ -95,8 +93,7 @@ fun AuthorizationScreen(logoResId: Int, viewModel: AuthorizationViewModel) {
                 ) {
                     item {
                         Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalAlignment = Alignment.CenterHorizontally
+                            modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Image(
                                 painter = painterResource(id = logoResId),
@@ -107,8 +104,7 @@ fun AuthorizationScreen(logoResId: Int, viewModel: AuthorizationViewModel) {
                         Spacer(modifier = Modifier.height(12.dp))
                     }
                     item {
-                        BuildForm(
-                            isRegister = selectedTabIndex == 1,
+                        BuildForm(isRegister = selectedTabIndex == 1,
                             username = username,
                             usernameError = usernameError,
                             firstName = firstName,
@@ -168,8 +164,7 @@ fun AuthorizationScreen(logoResId: Int, viewModel: AuthorizationViewModel) {
                                     viewModel.onPasswordRepeatVisibilityChanged(value)
                                 }
 
-                            }
-                        )
+                            })
                     }
                 }
             }
@@ -200,21 +195,15 @@ private fun BuildForm(
     delegate: FormDelegate
 ) {
     Column {
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(), value = username,
-            onValueChange = {
-                delegate.onUsernameChanged(it)
-            },
-            label = {
-                Text(text = "Username (required)")
-            },
-            singleLine = true, isError = usernameError != null,
-            keyboardOptions = KeyboardOptions.Default.copy(
-                imeAction = ImeAction.Next
-            ),
-            keyboardActions = KeyboardActions(onNext = {
-                focusManager.moveFocus(FocusDirection.Down)
-            })
+        OutlinedTextField(modifier = Modifier.fillMaxWidth(), value = username, onValueChange = {
+            delegate.onUsernameChanged(it)
+        }, label = {
+            Text(text = "Username (required)")
+        }, singleLine = true, isError = usernameError != null, keyboardOptions = KeyboardOptions.Default.copy(
+            imeAction = ImeAction.Next
+        ), keyboardActions = KeyboardActions(onNext = {
+            focusManager.moveFocus(FocusDirection.Down)
+        })
         )
         AnimatedVisibility(visible = usernameError != null) {
             if (usernameError != null) {
@@ -272,7 +261,7 @@ private fun BuildForm(
                 delegate.onEmailChanged(it)
             }, label = {
                 Text(text = "Email (required)")
-            }, singleLine = true, isError = emailError != null,keyboardOptions = KeyboardOptions.Default.copy(
+            }, singleLine = true, isError = emailError != null, keyboardOptions = KeyboardOptions.Default.copy(
                 imeAction = ImeAction.Next
             ), keyboardActions = KeyboardActions(onNext = {
                 focusManager.moveFocus(FocusDirection.Down)
@@ -288,8 +277,7 @@ private fun BuildForm(
                 )
             }
         }
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
+        OutlinedTextField(modifier = Modifier.fillMaxWidth(),
             value = password,
             onValueChange = {
                 delegate.onPasswordChanged(it)
@@ -313,12 +301,12 @@ private fun BuildForm(
             singleLine = true,
             isError = passwordError != null,
             keyboardOptions = if (isRegister) KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Password,
-                imeAction = ImeAction.Next
+                keyboardType = KeyboardType.Password, imeAction = ImeAction.Next
             ) else KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password),
             keyboardActions = KeyboardActions(onNext = {
-                if (isRegister)
-                    focusManager.moveFocus(FocusDirection.Down)
+                if (isRegister) focusManager.moveFocus(FocusDirection.Down)
+            }, onDone = {
+                focusManager.clearFocus(true)
             })
         )
         AnimatedVisibility(visible = passwordError != null) {
@@ -331,8 +319,7 @@ private fun BuildForm(
             }
         }
         AnimatedVisibility(visible = isRegister) {
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
+            OutlinedTextField(modifier = Modifier.fillMaxWidth(),
                 value = passwordRepeat,
                 onValueChange = {
                     delegate.onPasswordRepeatChanged(it)
@@ -343,6 +330,9 @@ private fun BuildForm(
                 isError = passwordRepeatError != null,
                 visualTransformation = if (passwordRepeatVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                keyboardActions = KeyboardActions(onDone = {
+                    focusManager.clearFocus(true)
+                }),
                 trailingIcon = {
                     val image = if (passwordRepeatVisible) Icons.Filled.Visibility
                     else Icons.Filled.VisibilityOff

@@ -104,5 +104,7 @@ class RootContainer(
         selectedProjectManager = selectedProjectManager
     )
 
-    fun createProject(): CreateProjectContainer = CreateProjectContainer()
+    fun createProject(): CreateProjectContainer = CreateProjectContainer(
+        projectService = projectService
+    )
 }

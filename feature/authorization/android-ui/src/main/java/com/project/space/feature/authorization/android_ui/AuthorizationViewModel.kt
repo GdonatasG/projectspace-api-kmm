@@ -24,31 +24,36 @@ class AuthorizationViewModel(
     val username: StateFlow<TextFieldValue> get() = _username.asStateFlow()
 
     private val _usernameError: MutableStateFlow<String?> = MutableStateFlow(null)
-    val usernameError: StateFlow<String?> = _usernameError.asStateFlow()
+    val usernameError: StateFlow<String?>
+        get() = _usernameError.asStateFlow()
 
     private val _firstName: MutableStateFlow<TextFieldValue> = MutableStateFlow(TextFieldValue())
     val firstName: StateFlow<TextFieldValue> get() = _firstName.asStateFlow()
 
     private val _firstNameError: MutableStateFlow<String?> = MutableStateFlow(null)
-    val firstNameError: StateFlow<String?> = _firstNameError.asStateFlow()
+    val firstNameError: StateFlow<String?>
+        get() = _firstNameError.asStateFlow()
 
     private val _lastName: MutableStateFlow<TextFieldValue> = MutableStateFlow(TextFieldValue())
     val lastName: StateFlow<TextFieldValue> get() = _lastName.asStateFlow()
 
     private val _lastNameError: MutableStateFlow<String?> = MutableStateFlow(null)
-    val lastNameError: StateFlow<String?> = _lastNameError.asStateFlow()
+    val lastNameError: StateFlow<String?>
+        get() = _lastNameError.asStateFlow()
 
     private val _email: MutableStateFlow<TextFieldValue> = MutableStateFlow(TextFieldValue())
     val email: StateFlow<TextFieldValue> get() = _email.asStateFlow()
 
     private val _emailError: MutableStateFlow<String?> = MutableStateFlow(null)
-    val emailError: StateFlow<String?> = _emailError.asStateFlow()
+    val emailError: StateFlow<String?>
+        get() = _emailError.asStateFlow()
 
     private val _password: MutableStateFlow<TextFieldValue> = MutableStateFlow(TextFieldValue())
     val password: StateFlow<TextFieldValue> get() = _password.asStateFlow()
 
     private val _passwordError: MutableStateFlow<String?> = MutableStateFlow(null)
-    val passwordError: StateFlow<String?> = _passwordError.asStateFlow()
+    val passwordError: StateFlow<String?>
+        get() = _passwordError.asStateFlow()
 
     private val _passwordVisible: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val passwordVisible: StateFlow<Boolean> get() = _passwordVisible.asStateFlow()
@@ -57,7 +62,8 @@ class AuthorizationViewModel(
     val passwordRepeat: StateFlow<TextFieldValue> get() = _passwordRepeat.asStateFlow()
 
     private val _passwordRepeatError: MutableStateFlow<String?> = MutableStateFlow(null)
-    val passwordRepeatError: StateFlow<String?> = _passwordRepeatError.asStateFlow()
+    val passwordRepeatError: StateFlow<String?>
+        get() = _passwordRepeatError.asStateFlow()
 
     private val _passwordRepeatVisible: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val passwordRepeatVisible: StateFlow<Boolean> get() = _passwordRepeatVisible.asStateFlow()

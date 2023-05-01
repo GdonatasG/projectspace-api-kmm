@@ -13,6 +13,7 @@ class CreateProjectFlow(
         val container = container.createProject()
 
         val presenter = container.presenter(
+            alert = alert,
             delegate = DefaultCreateProjectDelegate(
                 navigator = navigator
             )

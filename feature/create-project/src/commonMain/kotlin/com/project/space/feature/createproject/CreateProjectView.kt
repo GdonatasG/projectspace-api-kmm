@@ -6,8 +6,7 @@ sealed class State {
 }
 
 data class FormErrors(
-    val name: String? = null,
-    val description: String = "",
+    val name: String? = null
 ) {
     companion object {
         fun empty(): FormErrors = FormErrors()
