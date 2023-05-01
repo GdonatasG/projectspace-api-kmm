@@ -15,7 +15,8 @@ import androidx.compose.ui.unit.dp
 fun ListTile(
     title: String,
     description: String? = null,
-    divided: Boolean = true,
+    topDivider: Boolean = false,
+    bottomDivider: Boolean = true,
     onClick: (() -> Unit)? = null,
     leading: @Composable () -> Unit = {},
     trailing: @Composable () -> Unit = {}
@@ -29,6 +30,9 @@ fun ListTile(
     }
 
     Column {
+        if (topDivider) {
+            Divider()
+        }
         Row(
             modifier = modifier.padding(12.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -55,7 +59,7 @@ fun ListTile(
             }
             trailing()
         }
-        if (divided) {
+        if (bottomDivider) {
             Divider()
         }
     }

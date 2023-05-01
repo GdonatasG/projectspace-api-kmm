@@ -40,3 +40,6 @@ include(":feature:create-project:android-ui")
 
 include(":feature:profile")
 include(":feature:profile:android-ui")
+
+include(":feature:userinvitations")
+include(":feature:userinvitations:android-ui")

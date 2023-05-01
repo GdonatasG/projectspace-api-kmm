@@ -6,10 +6,8 @@ import com.project.space.components.navigation.NavigationAction
 import com.project.space.components.navigation.Navigator
 import com.project.space.feature.authorization.AuthorizationPresenter
 import com.project.space.feature.createproject.CreateProjectPresenter
-import com.project.space.presentation.destinations.AuthorizationScreenDestination
-import com.project.space.presentation.destinations.CreateProjectScreenDestination
-import com.project.space.presentation.destinations.MainScreenDestination
-import com.project.space.presentation.destinations.SplashScreenDestination
+import com.project.space.feature.userinvitations.UserInvitationsPresenter
+import com.project.space.presentation.destinations.*
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 
@@ -89,6 +87,23 @@ class DefaultSharedNavigationCoordinator(
         navigator.navigate(
             NavigationAction(
                 destination = CreateProjectScreenDestination(),
+                navOptions = NavOptions.Builder()
+                    .setLaunchSingleTop(true)
+                    .build(),
+            )
+        )
+    }
+
+    override fun startUserInvitations(presenter: UserInvitationsPresenter) {
+        loadKoinModules(
+            module {
+                factory { presenter }
+            }
+        )
+
+        navigator.navigate(
+            NavigationAction(
+                destination = UserInvitationsScreenDestination(),
                 navOptions = NavOptions.Builder()
                     .setLaunchSingleTop(true)
                     .build(),

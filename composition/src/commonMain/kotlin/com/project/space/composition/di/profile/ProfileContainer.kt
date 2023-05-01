@@ -6,6 +6,7 @@ import com.project.space.composition.di.RootContainer
 import com.project.space.composition.di.profile.usecase.GetCurrentUserUseCase
 import com.project.space.composition.di.profile.usecase.GetInvitationsCountUseCase
 import com.project.space.composition.navigation.Navigator
+import com.project.space.composition.navigation.UserInvitationsFlow
 import com.project.space.feature.common.AuthorizationStoreManager
 import com.project.space.feature.profile.DefaultProfilePresenter
 import com.project.space.feature.profile.ProfileDelegate
@@ -60,7 +61,11 @@ private class DefaultProfileDelegate(
     }
 
     override fun onNavigateToInvitations() {
-
+        UserInvitationsFlow(
+            container = container,
+            navigator = navigator,
+            alert = alert
+        ).start()
     }
 
     override fun onLogout() {
