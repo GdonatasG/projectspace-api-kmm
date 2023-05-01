@@ -1,12 +1,11 @@
 package com.project.space.feature.projects
 
-import com.project.space.feature.common.domain.model.SelectedProject
-
 actual interface ProjectsView {
-    fun display(projectsViewViewStateLoading: State.Loading)
-    fun display(projectsViewViewStateContent: State.Content)
-    fun display(projectsViewViewStateEmpty: State.Empty)
-    fun display(projectsViewViewStateError: State.Error)
+    fun display(projectsViewStateLoading: State.Loading)
+    fun display(projectsViewStateRefreshing: State.Refreshing)
+    fun display(projectsViewStateContent: State.Content)
+    fun display(projectsViewStateEmpty: State.Empty)
+    fun display(projectsViewStateError: State.Error)
 }
 
 internal actual fun update(view: ProjectsView?, state: State) {
@@ -16,5 +15,6 @@ internal actual fun update(view: ProjectsView?, state: State) {
         is State.Content -> view.display(state)
         is State.Empty -> view.display(state)
         is State.Error -> view.display(state)
+        is State.Refreshing -> view.display(state)
     }
 }

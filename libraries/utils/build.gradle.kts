@@ -19,7 +19,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(":libraries:coroutines"))
+                api(project(":libraries:coroutines"))
                 implementation(Dependencies.KotlinX.serializationCore)
             }
         }

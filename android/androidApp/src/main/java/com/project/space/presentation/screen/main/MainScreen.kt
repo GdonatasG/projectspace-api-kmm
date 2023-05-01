@@ -26,6 +26,6 @@ fun MainScreen() {
         modifier = Modifier
             .fillMaxSize(),
         bottomBar = { BottomNavBar(navController = bottomNavController, tabs = tabs) }) {
-        MainScreenBottomNavigation(bottomNavHostController = bottomNavController)
+        MainScreenBottomNavigation(paddingValues = it, bottomNavHostController = bottomNavController)
     }
 }

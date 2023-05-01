@@ -5,6 +5,7 @@ import com.project.space.feature.projects.domain.Project
 
 sealed class State {
     object Loading : State()
+    object Refreshing : State()
     data class Content(val data: List<Project>) : State()
     data class Empty(val title: String, val message: String) : State()
     data class Error(val title: String, val message: String) : State()

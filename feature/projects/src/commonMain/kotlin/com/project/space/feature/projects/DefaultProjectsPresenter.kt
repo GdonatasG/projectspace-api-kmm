@@ -35,10 +35,21 @@ class DefaultProjectsPresenter(
     override fun onAppear() {
         super.onAppear()
         selectedProject = getSelectedProject()
+        state = State.Loading
+    }
+
+    override fun onResume() {
+        super.onResume()
         _getProjects()
     }
 
     override fun onRetry() {
+        state = State.Loading
+        _getProjects()
+    }
+
+    override fun onRefresh() {
+        state = State.Refreshing
         _getProjects()
     }
 
@@ -68,7 +79,6 @@ class DefaultProjectsPresenter(
 
     private fun _getProjects() {
         scope.cancelAllJobs()
-        state = State.Loading
         getProjects(tab = tab) { response ->
             when (response) {
                 is GetProjects.Response.Success -> {
@@ -105,6 +115,7 @@ class DefaultProjectsPresenter(
 
     override fun onTabChange(tab: Tab) {
         this.tab = tab
+        state = State.Loading
         _getProjects()
     }
 
