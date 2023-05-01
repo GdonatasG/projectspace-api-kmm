@@ -13,6 +13,7 @@ import com.project.space.composition.di.authorization.AuthorizationContainer
 import com.project.space.composition.di.createproject.CreateProjectContainer
 import com.project.space.composition.di.profile.ProfileContainer
 import com.project.space.composition.di.projects.ProjectsContainer
+import com.project.space.composition.di.userinvitations.UserInvitationsContainer
 import com.project.space.composition.navigation.Navigator
 import com.project.space.feature.common.domain.model.AuthorizationState
 import com.project.space.feature.common.AuthorizationStoreManager
@@ -113,6 +114,11 @@ class RootContainer(
         container = this,
         navigator = navigator,
         authorizationStoreManager = authorizationStoreManager,
+        invitationService = invitationService
+    )
+
+    fun userInvitations(): UserInvitationsContainer = UserInvitationsContainer(
+        navigator = navigator,
         invitationService = invitationService
     )
 

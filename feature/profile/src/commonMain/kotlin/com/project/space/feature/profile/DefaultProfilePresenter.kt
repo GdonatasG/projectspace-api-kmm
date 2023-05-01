@@ -39,7 +39,6 @@ class DefaultProfilePresenter(
 
         invitationsCountState = InvitationsCountState.Loading
     }
-
     override fun onResume() {
         super.onResume()
         _getInvitationCount()

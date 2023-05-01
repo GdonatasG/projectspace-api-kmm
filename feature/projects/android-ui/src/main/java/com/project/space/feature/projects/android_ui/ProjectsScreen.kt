@@ -113,7 +113,6 @@ private fun Content(data: List<Project>, refreshing: Boolean, delegate: ContentD
             }) { index, project ->
                 ListTile(title = project.name,
                     description = project.description.trim().ifEmpty { null },
-                    divided = index < data.size - 1,
                     trailing = {
                         if (!project.selected) {
                             Image(imageVector = Icons.Default.ArrowRight, contentDescription = "Change project")

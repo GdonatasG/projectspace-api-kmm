@@ -77,8 +77,7 @@ fun ProfileScreen(viewModel: ProfileViewModel) {
             LazyColumn(
                 modifier = Modifier
                     .padding(top = 16.dp)
-                    .fillMaxHeight(),
-                state = listState
+                    .fillMaxHeight(), state = listState
             ) {
                 item {
                     ListTile(title = "Edit profile", leading = {
@@ -87,28 +86,27 @@ fun ProfileScreen(viewModel: ProfileViewModel) {
                         Image(imageVector = Icons.Default.ArrowRight, contentDescription = "Edit profile")
                     }, onClick = {
                         viewModel.onNavigateToEditProfile()
-                    })
+                    }, topDivider = true
+                    )
                 }
                 item {
-                    ListTile(
-                        title = when (val invitationsType = invitationsState) {
-                            is ProfileViewModel.InvitationsViewState.Content -> "Invitations (${invitationsType.count})"
-                            else -> "Invitations"
-                        }, leading = {
-                            Image(imageVector = Icons.Outlined.Mail, contentDescription = "See invitations")
-                        }, trailing = {
-                            Image(imageVector = Icons.Default.ArrowRight, contentDescription = "See invitations")
-                        }, onClick = {
-                            viewModel.onNavigateToInvitations()
-                        })
+                    ListTile(title = when (val invitationsType = invitationsState) {
+                        is ProfileViewModel.InvitationsViewState.Content -> "Invitations (${invitationsType.count})"
+                        else -> "Invitations"
+                    }, leading = {
+                        Image(imageVector = Icons.Outlined.Mail, contentDescription = "See invitations")
+                    }, trailing = {
+                        Image(imageVector = Icons.Default.ArrowRight, contentDescription = "See invitations")
+                    }, onClick = {
+                        viewModel.onNavigateToInvitations()
+                    })
                 }
                 item {
                     ListTile(title = "Logout", leading = {
                         Image(imageVector = Icons.Outlined.ExitToApp, contentDescription = "Logout")
                     }, onClick = {
                         viewModel.onLogout()
-                    }, divided = false
-                    )
+                    })
                 }
             }
 

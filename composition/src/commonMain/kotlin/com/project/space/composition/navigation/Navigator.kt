@@ -2,6 +2,7 @@ package com.project.space.composition.navigation
 
 import com.project.space.feature.authorization.AuthorizationPresenter
 import com.project.space.feature.createproject.CreateProjectPresenter
+import com.project.space.feature.userinvitations.UserInvitationsPresenter
 
 interface Navigator {
     fun startAuthorizationFromMain(presenter: AuthorizationPresenter)
@@ -12,6 +13,7 @@ interface Navigator {
     fun startMainFromSplash()
 
     fun startCreateProject(presenter: CreateProjectPresenter)
+    fun startUserInvitations(presenter: UserInvitationsPresenter)
 
     fun pop()
 }
