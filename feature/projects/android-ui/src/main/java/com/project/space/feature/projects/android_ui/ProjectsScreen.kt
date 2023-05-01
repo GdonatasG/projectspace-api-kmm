@@ -41,7 +41,7 @@ fun ProjectsScreen(viewModel: ProjectsViewModel) {
             Column(modifier = Modifier.fillMaxWidth()) {
                 CenterAlignedTopAppBar(title = { Text(text = "Projects") }, actions = {
                     IconButton(onClick = {
-
+                        viewModel.onNavigateToCreateProject()
                     }) {
                         Image(imageVector = Icons.Default.Add, contentDescription = "Create Project")
                     }

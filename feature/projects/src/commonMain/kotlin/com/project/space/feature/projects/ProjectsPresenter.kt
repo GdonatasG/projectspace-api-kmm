@@ -8,4 +8,6 @@ abstract class ProjectsPresenter : Presenter<ProjectsView>() {
     abstract fun onRetry()
     abstract fun onRefresh()
     abstract fun setSelectedProject(project: Project)
+
+    abstract fun onNavigateToCreateProject()
 }
