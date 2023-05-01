@@ -10,6 +10,7 @@ import com.libraries.logger.NapierLogger
 import com.libraries.preferences.Preferences
 import com.libraries.utils.isDebug
 import com.project.space.composition.di.authorization.AuthorizationContainer
+import com.project.space.composition.di.createproject.CreateProjectContainer
 import com.project.space.composition.di.projects.ProjectsContainer
 import com.project.space.composition.navigation.AuthorizationFlow
 import com.project.space.composition.navigation.Navigator
@@ -97,7 +98,13 @@ class RootContainer(
     )
 
     fun projects(): ProjectsContainer = ProjectsContainer(
+        navigator = navigator,
+        container = this,
         projectService = projectService,
         selectedProjectManager = selectedProjectManager
+    )
+
+    fun createProject(): CreateProjectContainer = CreateProjectContainer(
+        projectService = projectService
     )
 }

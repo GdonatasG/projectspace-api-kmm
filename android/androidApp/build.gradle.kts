@@ -50,6 +50,7 @@ dependencies {
     implementation(project(":feature:splashscreen:android-ui"))
     implementation(project(":feature:authorization:android-ui"))
     implementation(project(":feature:projects:android-ui"))
+    implementation(project(":feature:create-project:android-ui"))
 
     ksp(Dependencies.Android.ComposeDestinations.ksp)
     implementation(Dependencies.KotlinX.serializationCore)

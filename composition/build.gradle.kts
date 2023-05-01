@@ -27,6 +27,7 @@ kotlin {
 
                 api(project(":feature:authorization"))
                 api(project(":feature:projects"))
+                api(project(":feature:create-project"))
 
                 api(project(":libraries:alerts"))
                 implementation(project(":libraries:logger"))

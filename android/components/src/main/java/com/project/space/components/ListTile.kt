@@ -21,7 +21,7 @@ fun ListTile(
 ) {
     var modifier: Modifier = Modifier
         .fillMaxWidth()
-        .defaultMinSize(minHeight = 60.dp)
+        .defaultMinSize(minHeight = 70.dp)
 
     onClick?.let {
         modifier = modifier.clickable { it() }

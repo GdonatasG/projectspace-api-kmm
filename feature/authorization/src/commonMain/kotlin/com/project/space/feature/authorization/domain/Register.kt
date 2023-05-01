@@ -4,7 +4,7 @@ interface Register {
     sealed class Response {
         object Success : Response()
         data class Error(val message: String) : Response()
-        data class InputErrors(val data: List<Register.InputError>) : Response()
+        data class InputErrors(val data: List<InputError>) : Response()
     }
 
     data class InputError(val input: String, val message: String)

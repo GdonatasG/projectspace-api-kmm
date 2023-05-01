@@ -41,7 +41,7 @@ fun ProjectsScreen(viewModel: ProjectsViewModel) {
             Column(modifier = Modifier.fillMaxWidth()) {
                 CenterAlignedTopAppBar(title = { Text(text = "Projects") }, actions = {
                     IconButton(onClick = {
-
+                        viewModel.onNavigateToCreateProject()
                     }) {
                         Image(imageVector = Icons.Default.Add, contentDescription = "Create Project")
                     }
@@ -112,7 +112,7 @@ private fun Content(data: List<Project>, refreshing: Boolean, delegate: ContentD
                 project.id
             }) { index, project ->
                 ListTile(title = project.name,
-                    description = project.description.ifEmpty { null },
+                    description = project.description.trim().ifEmpty { null },
                     divided = index < data.size - 1,
                     trailing = {
                         if (!project.selected) {

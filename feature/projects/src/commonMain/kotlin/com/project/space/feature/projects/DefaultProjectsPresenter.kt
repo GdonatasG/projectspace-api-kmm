@@ -16,6 +16,7 @@ class DefaultProjectsPresenter(
     private val setProjectAsSelected: SetSelectedProject,
     private val getSelectedProject: GetSelectedProject,
     private val alert: Alert.Coordinator,
+    private val delegate: ProjectsDelegate
 ) : ProjectsPresenter() {
     override var viewHolder: ViewHolder<ProjectsView> = ViewHolder()
 
@@ -67,6 +68,10 @@ class DefaultProjectsPresenter(
                 }
             })
         })
+    }
+
+    override fun onNavigateToCreateProject() {
+        delegate.onNavigateToCreateProject()
     }
 
     private fun fetchSelectedProjectAndUpdateStateIfNeeded() {

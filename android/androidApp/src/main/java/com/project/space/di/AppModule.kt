@@ -6,6 +6,8 @@ import com.project.space.composition.di.projects.ProjectsContainer
 import com.project.space.composition.navigation.RootFlow
 import com.project.space.feature.authorization.AuthorizationPresenter
 import com.project.space.feature.authorization.android_ui.AuthorizationViewModel
+import com.project.space.feature.createproject.CreateProjectPresenter
+import com.project.space.feature.createproject.android_ui.CreateProjectViewModel
 import com.project.space.feature.projects.ProjectsPresenter
 import com.project.space.feature.projects.android_ui.ProjectsViewModel
 import com.project.space.feature.splashscreen.SplashPresenter
@@ -39,6 +41,11 @@ val commonModule = module {
     viewModel {
         val presenter: AuthorizationPresenter = get()
         AuthorizationViewModel(presenter = presenter)
+    }
+
+    viewModel {
+        val presenter: CreateProjectPresenter = get()
+        CreateProjectViewModel(presenter = presenter)
     }
 }
 
