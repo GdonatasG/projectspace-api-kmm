@@ -11,9 +11,9 @@ class AuthorizationFlow(
     fun start() {
         val container = container.authorization()
         val presenter = container.presenter(alert = alert) {
-            navigator.startMain()
+            navigator.startMainFromAuthorization()
         }
 
-        navigator.startAuthorization(presenter = presenter)
+        navigator.startAuthorizationFromSplash(presenter = presenter)
     }
 }

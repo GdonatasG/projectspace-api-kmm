@@ -61,16 +61,10 @@ fun BaseNavigation(
 
     BackStackHandler(navHostController = navHostController)
 
-    LaunchedEffect(navActions) {
-        navActions?.let { action ->
-            if (action.popUpAll) {
-                navHostController.popBackStack()
-            }
-            navHostController.navigate(
-                route = action.destination.route,
-                navOptions = action.navOptions
-            )
-            navigator.resetNavigationAction()
+    LaunchedEffect(closeAlertAction) {
+        closeAlertAction?.let {
+            navHostController.popBackStack()
+            alertController.resetCloseAction()
         }
     }
 
@@ -81,10 +75,16 @@ fun BaseNavigation(
         }
     }
 
-    LaunchedEffect(closeAlertAction) {
-        closeAlertAction?.let {
-            navHostController.popBackStack()
-            alertController.resetCloseAction()
+    LaunchedEffect(navActions) {
+        navActions?.let { action ->
+            if (action.popUpAll) {
+                navHostController.popBackStack()
+            }
+            navHostController.navigate(
+                route = action.destination.route,
+                navOptions = action.navOptions
+            )
+            navigator.resetNavigationAction()
         }
     }
 

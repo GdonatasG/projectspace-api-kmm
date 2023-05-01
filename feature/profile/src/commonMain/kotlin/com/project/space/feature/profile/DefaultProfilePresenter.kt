@@ -5,12 +5,11 @@ import com.libraries.utils.PlatformScopeManager
 import com.libraries.utils.ViewHolder
 import com.project.space.feature.profile.domain.GetCurrentUser
 import com.project.space.feature.profile.domain.GetInvitationsCount
-import com.project.space.feature.profile.domain.Logout
+import kotlinx.coroutines.delay
 
 class DefaultProfilePresenter(
     private val scope: PlatformScopeManager,
     private val alert: Alert.Coordinator,
-    private val logout: Logout,
     private val getCurrentUser: GetCurrentUser,
     private val getInvitationsCount: GetInvitationsCount,
     private val delegate: ProfileDelegate
@@ -77,7 +76,6 @@ class DefaultProfilePresenter(
                 title = "Logout"
                 event = Alert.Button.Event.DESTRUCTIVE
                 onClick = {
-                    logout()
                     delegate.onLogout()
                 }
             })

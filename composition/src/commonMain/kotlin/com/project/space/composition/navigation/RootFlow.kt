@@ -17,6 +17,6 @@ class RootFlow(
             ).start()
         }
 
-        navigator.startMain()
+        navigator.startMainFromSplash()
     }
 }

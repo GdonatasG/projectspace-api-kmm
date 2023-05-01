@@ -17,6 +17,7 @@ fun ListTile(
     description: String? = null,
     divided: Boolean = true,
     onClick: (() -> Unit)? = null,
+    leading: @Composable () -> Unit = {},
     trailing: @Composable () -> Unit = {}
 ) {
     var modifier: Modifier = Modifier
@@ -33,6 +34,7 @@ fun ListTile(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            leading()
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = title,

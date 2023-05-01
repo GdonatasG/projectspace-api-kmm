@@ -13,7 +13,6 @@ import com.project.space.composition.di.authorization.AuthorizationContainer
 import com.project.space.composition.di.createproject.CreateProjectContainer
 import com.project.space.composition.di.profile.ProfileContainer
 import com.project.space.composition.di.projects.ProjectsContainer
-import com.project.space.composition.navigation.AuthorizationFlow
 import com.project.space.composition.navigation.Navigator
 import com.project.space.feature.common.domain.model.AuthorizationState
 import com.project.space.feature.common.AuthorizationStoreManager
@@ -73,13 +72,7 @@ class RootContainer(
         DefaultProjectSpaceHttpClient(client = httpClient).baseUrl(Config.BASE_URL).addAuthorizationHandler {
             Token(TokenType.BEARER, authorizationStoreManager.getAuthState()?.accessToken ?: "")
         }.addAuthenticationStatusHandler(onUnauthorized = {
-            authorizationStoreManager.clearAuthState()
-            authorizationStoreManager.clearCurrentUser()
-            selectedProjectManager.clearSelectedProject()
-
-            navigator.startAuthorization(authorization().presenter(alert = alert, onAuthorized = {
-                navigator.startMain()
-            }))
+            onLogout()
         })
     }
 
@@ -120,7 +113,16 @@ class RootContainer(
         container = this,
         navigator = navigator,
         authorizationStoreManager = authorizationStoreManager,
-        selectedProjectManager = selectedProjectManager,
         invitationService = invitationService
     )
+
+    fun onLogout() {
+        authorizationStoreManager.clearAuthState()
+        authorizationStoreManager.clearCurrentUser()
+        selectedProjectManager.clearSelectedProject()
+
+        navigator.startAuthorizationFromMain(authorization().presenter(alert = alert, onAuthorized = {
+            navigator.startMainFromAuthorization()
+        }))
+    }
 }

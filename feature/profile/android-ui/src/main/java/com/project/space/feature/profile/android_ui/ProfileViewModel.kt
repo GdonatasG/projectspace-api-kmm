@@ -52,6 +52,22 @@ class ProfileViewModel(
         }
     }
 
+    fun onRefresh() {
+        presenter.onRefresh()
+    }
+
+    fun onNavigateToEditProfile() {
+        presenter.onNavigateToEditProfile()
+    }
+
+    fun onNavigateToInvitations() {
+        presenter.onNavigateToInvitations()
+    }
+
+    fun onLogout() {
+        presenter.onLogout()
+    }
+
     override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
         when (event) {
             Lifecycle.Event.ON_START -> presenter.onResume()
