@@ -8,7 +8,7 @@ import com.project.space.feature.authorization.AuthorizationPresenter
 import com.project.space.feature.authorization.DefaultAuthorizationPresenter
 import com.project.space.feature.authorization.domain.Login
 import com.project.space.feature.authorization.domain.Register
-import com.project.space.feature.common.domain.AuthorizationStoreManager
+import com.project.space.feature.common.AuthorizationStoreManager
 import com.project.space.services.auth.AuthService
 import com.project.space.services.user.UserService
 

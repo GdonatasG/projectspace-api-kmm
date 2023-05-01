@@ -1,8 +1,12 @@
 package com.project.space.presentation.screen.main
 
 import androidx.compose.animation.*
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -12,8 +16,9 @@ import com.project.space.presentation.screen.ProjectsScreen
 import com.project.space.presentation.screen.TasksScreen
 
 @Composable
-fun MainScreenBottomNavigation(bottomNavHostController: NavHostController) {
+fun MainScreenBottomNavigation(paddingValues: PaddingValues, bottomNavHostController: NavHostController) {
     NavHost(
+        modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()),
         navController = bottomNavHostController,
         startDestination = Tab.DASHBOARD.route
     ) {

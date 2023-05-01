@@ -21,6 +21,9 @@ include(":feature:splashscreen:android-ui")
 include(":feature:authorization")
 include(":feature:authorization:android-ui")
 
+include(":feature:projects")
+include(":feature:projects:android-ui")
+
 include(":libraries:test")
 include(":libraries:utils")
 include(":libraries:coroutines")

@@ -23,6 +23,7 @@ kotlin {
                 implementation(Dependencies.KotlinX.serializationCore)
 
                 implementation(project(":libraries:preferences"))
+                implementation(project(":libraries:utils"))
             }
         }
         val commonTest by getting {

@@ -1,5 +1,6 @@
 package com.project.space
 
+import com.project.space.di.bottomNavigationModule
 import com.project.space.di.commonModule
 import com.project.space.di.navigationCoordinatorsModule
 import org.koin.android.ext.koin.androidContext
@@ -11,7 +12,7 @@ class Application : android.app.Application(), KoinComponent {
         super.onCreate()
         startKoin {
             androidContext(this@Application)
-            modules(commonModule, navigationCoordinatorsModule)
+            modules(commonModule, bottomNavigationModule, navigationCoordinatorsModule)
         }
     }
 }

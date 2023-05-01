@@ -22,8 +22,10 @@ fun MainScreen() {
         Tab.DASHBOARD, Tab.TASKS, Tab.PROJECTS, Tab.PROFILE
     )
 
-    Scaffold(modifier = Modifier.fillMaxSize(),
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize(),
         bottomBar = { BottomNavBar(navController = bottomNavController, tabs = tabs) }) {
-        MainScreenBottomNavigation(bottomNavHostController = bottomNavController)
+        MainScreenBottomNavigation(paddingValues = it, bottomNavHostController = bottomNavController)
     }
 }

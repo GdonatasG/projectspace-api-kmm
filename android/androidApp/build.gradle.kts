@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     id("com.google.devtools.ksp") version Versions.ksp
+    kotlin("plugin.serialization") version Versions.kotlin
 }
 
 android {
@@ -44,11 +45,14 @@ dependencies {
     implementation(project(":android:components"))
 
     implementation(project(":feature:common"))
+
     implementation(project(":feature:splashscreen"))
     implementation(project(":feature:splashscreen:android-ui"))
     implementation(project(":feature:authorization:android-ui"))
+    implementation(project(":feature:projects:android-ui"))
 
     ksp(Dependencies.Android.ComposeDestinations.ksp)
+    implementation(Dependencies.KotlinX.serializationCore)
 
     implementation(Dependencies.Android.Accompanist.flowLayout)
     implementation(Dependencies.Android.Compose.material3)

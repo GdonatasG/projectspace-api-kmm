@@ -42,5 +42,7 @@ dependencies {
     implementation(Dependencies.Android.ComposeDestinations.core)
     implementation(Dependencies.Android.ComposeDestinations.animations)
 
+    implementation(Dependencies.Koin.compose)
+
     implementation(Dependencies.KotlinX.coroutinesCore)
 }

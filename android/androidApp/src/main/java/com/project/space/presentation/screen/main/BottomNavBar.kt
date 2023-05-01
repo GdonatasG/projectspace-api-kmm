@@ -1,6 +1,7 @@
 package com.project.space.presentation.screen.main
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.Article
@@ -22,7 +23,8 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 @Composable
 fun BottomNavBar(navController: NavController, tabs: List<Tab>) {
     NavigationBar(
-        modifier = Modifier.shadow(6.dp),
+        modifier = Modifier
+            .shadow(6.dp),
         containerColor = Color.White
     ) {
         val current by navController.currentBottomNavScreenAsState()
