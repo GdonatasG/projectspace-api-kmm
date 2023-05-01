@@ -51,6 +51,7 @@ dependencies {
     implementation(project(":feature:authorization:android-ui"))
     implementation(project(":feature:projects:android-ui"))
     implementation(project(":feature:create-project:android-ui"))
+    implementation(project(":feature:profile:android-ui"))
 
     ksp(Dependencies.Android.ComposeDestinations.ksp)
     implementation(Dependencies.KotlinX.serializationCore)

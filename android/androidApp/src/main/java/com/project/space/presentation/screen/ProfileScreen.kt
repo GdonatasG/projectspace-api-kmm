@@ -7,12 +7,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.project.space.components.utils.getLifecycleViewModel
+import com.project.space.feature.profile.android_ui.ProfileViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreen() {
-    Scaffold(modifier = Modifier.statusBarsPadding()) {
-        Text(text = "ProfileScreen")
-    }
+fun ProfileScreen(viewModel: ProfileViewModel = getLifecycleViewModel()) {
+    com.project.space.feature.profile.android_ui.ProfileScreen(viewModel = viewModel)
 }

@@ -11,8 +11,8 @@ import com.libraries.preferences.Preferences
 import com.libraries.utils.isDebug
 import com.project.space.composition.di.authorization.AuthorizationContainer
 import com.project.space.composition.di.createproject.CreateProjectContainer
+import com.project.space.composition.di.profile.ProfileContainer
 import com.project.space.composition.di.projects.ProjectsContainer
-import com.project.space.composition.navigation.AuthorizationFlow
 import com.project.space.composition.navigation.Navigator
 import com.project.space.feature.common.domain.model.AuthorizationState
 import com.project.space.feature.common.AuthorizationStoreManager
@@ -26,6 +26,7 @@ import com.project.space.services.common.http.ProjectSpaceHttpClient
 import com.project.space.services.common.http.interceptor.addAuthenticationStatusHandler
 import com.project.space.services.common.http.interceptor.addAuthorizationHandler
 import com.project.space.services.common.http.interceptor.baseUrl
+import com.project.space.services.invitation.InvitationService
 import com.project.space.services.project.ProjectService
 import com.project.space.services.user.UserService
 import io.github.aakira.napier.DebugAntilog
@@ -71,13 +72,7 @@ class RootContainer(
         DefaultProjectSpaceHttpClient(client = httpClient).baseUrl(Config.BASE_URL).addAuthorizationHandler {
             Token(TokenType.BEARER, authorizationStoreManager.getAuthState()?.accessToken ?: "")
         }.addAuthenticationStatusHandler(onUnauthorized = {
-            authorizationStoreManager.clearAuthState()
-            authorizationStoreManager.clearCurrentUser()
-            selectedProjectManager.clearSelectedProject()
-
-            navigator.startAuthorization(authorization().presenter(alert = alert, onAuthorized = {
-                navigator.startMain()
-            }))
+            onLogout()
         })
     }
 
@@ -89,6 +84,12 @@ class RootContainer(
 
     private val projectService: ProjectService by lazy {
         ProjectService(
+            client = spaceHttpClient
+        )
+    }
+
+    private val invitationService: InvitationService by lazy {
+        InvitationService(
             client = spaceHttpClient
         )
     }
@@ -107,4 +108,21 @@ class RootContainer(
     fun createProject(): CreateProjectContainer = CreateProjectContainer(
         projectService = projectService
     )
+
+    fun profile(): ProfileContainer = ProfileContainer(
+        container = this,
+        navigator = navigator,
+        authorizationStoreManager = authorizationStoreManager,
+        invitationService = invitationService
+    )
+
+    fun onLogout() {
+        authorizationStoreManager.clearAuthState()
+        authorizationStoreManager.clearCurrentUser()
+        selectedProjectManager.clearSelectedProject()
+
+        navigator.startAuthorizationFromMain(authorization().presenter(alert = alert, onAuthorized = {
+            navigator.startMainFromAuthorization()
+        }))
+    }
 }
