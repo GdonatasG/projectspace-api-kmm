@@ -98,7 +98,6 @@ class RootContainer(
 
     fun projects(): ProjectsContainer = ProjectsContainer(
         projectService = projectService,
-        selectedProjectManager = selectedProjectManager,
-        selectedProjectObservable = selectedProjectManager
+        selectedProjectManager = selectedProjectManager
     )
 }
