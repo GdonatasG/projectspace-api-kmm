@@ -11,6 +11,7 @@ import com.libraries.preferences.Preferences
 import com.libraries.utils.isDebug
 import com.project.space.composition.di.authorization.AuthorizationContainer
 import com.project.space.composition.di.createproject.CreateProjectContainer
+import com.project.space.composition.di.profile.ProfileContainer
 import com.project.space.composition.di.projects.ProjectsContainer
 import com.project.space.composition.navigation.AuthorizationFlow
 import com.project.space.composition.navigation.Navigator
@@ -26,6 +27,7 @@ import com.project.space.services.common.http.ProjectSpaceHttpClient
 import com.project.space.services.common.http.interceptor.addAuthenticationStatusHandler
 import com.project.space.services.common.http.interceptor.addAuthorizationHandler
 import com.project.space.services.common.http.interceptor.baseUrl
+import com.project.space.services.invitation.InvitationService
 import com.project.space.services.project.ProjectService
 import com.project.space.services.user.UserService
 import io.github.aakira.napier.DebugAntilog
@@ -93,6 +95,12 @@ class RootContainer(
         )
     }
 
+    private val invitationService: InvitationService by lazy {
+        InvitationService(
+            client = spaceHttpClient
+        )
+    }
+
     fun authorization(): AuthorizationContainer = AuthorizationContainer(
         authorizationStoreManager = authorizationStoreManager, authService = authService, userService = userService
     )
@@ -106,5 +114,13 @@ class RootContainer(
 
     fun createProject(): CreateProjectContainer = CreateProjectContainer(
         projectService = projectService
+    )
+
+    fun profile(): ProfileContainer = ProfileContainer(
+        container = this,
+        navigator = navigator,
+        authorizationStoreManager = authorizationStoreManager,
+        selectedProjectManager = selectedProjectManager,
+        invitationService = invitationService
     )
 }

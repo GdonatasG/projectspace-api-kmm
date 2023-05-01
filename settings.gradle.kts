@@ -37,3 +37,6 @@ include(":feature:projects:android-ui")
 
 include(":feature:create-project")
 include(":feature:create-project:android-ui")
+
+include(":feature:profile")
+include(":feature:profile:android-ui")
