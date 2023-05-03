@@ -43,3 +43,6 @@ include(":feature:profile:android-ui")
 
 include(":feature:userinvitations")
 include(":feature:userinvitations:android-ui")
+
+include(":feature:edit-profile")
+include(":feature:edit-profile:android-ui")
