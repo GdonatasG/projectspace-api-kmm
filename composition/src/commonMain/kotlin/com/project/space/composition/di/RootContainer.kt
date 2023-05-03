@@ -11,6 +11,7 @@ import com.libraries.preferences.Preferences
 import com.libraries.utils.isDebug
 import com.project.space.composition.di.authorization.AuthorizationContainer
 import com.project.space.composition.di.createproject.CreateProjectContainer
+import com.project.space.composition.di.editprofile.EditProfileContainer
 import com.project.space.composition.di.profile.ProfileContainer
 import com.project.space.composition.di.projects.ProjectsContainer
 import com.project.space.composition.di.userinvitations.UserInvitationsContainer
@@ -120,6 +121,11 @@ class RootContainer(
     fun userInvitations(): UserInvitationsContainer = UserInvitationsContainer(
         navigator = navigator,
         invitationService = invitationService
+    )
+
+    fun editProfile(): EditProfileContainer = EditProfileContainer(
+        navigator = navigator,
+        userService = userService
     )
 
     fun onLogout() {

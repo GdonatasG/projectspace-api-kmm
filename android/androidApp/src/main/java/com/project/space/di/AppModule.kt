@@ -9,6 +9,8 @@ import com.project.space.feature.authorization.AuthorizationPresenter
 import com.project.space.feature.authorization.android_ui.AuthorizationViewModel
 import com.project.space.feature.createproject.CreateProjectPresenter
 import com.project.space.feature.createproject.android_ui.CreateProjectViewModel
+import com.project.space.feature.editprofile.EditProfilePresenter
+import com.project.space.feature.editprofile.android_ui.EditProfileViewModel
 import com.project.space.feature.profile.ProfilePresenter
 import com.project.space.feature.profile.android_ui.ProfileViewModel
 import com.project.space.feature.projects.ProjectsPresenter
@@ -57,6 +59,12 @@ val commonModule = module {
         val presenter: UserInvitationsPresenter = get()
 
         UserInvitationsViewModel(presenter = presenter)
+    }
+
+    viewModel {
+        val presenter: EditProfilePresenter = get()
+
+        EditProfileViewModel(presenter = presenter)
     }
 }
 

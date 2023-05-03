@@ -49,6 +49,7 @@ fun UserInvitationsScreen(viewModel: UserInvitationsViewModel) {
         Column(
             modifier = Modifier
                 .padding(top = it.calculateTopPadding())
+                .navigationBarsPadding()
                 .imePadding()
                 .captionBarPadding()
         ) {

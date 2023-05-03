@@ -110,7 +110,7 @@ fun CreateProjectScreen(viewModel: CreateProjectViewModel) {
                             title = "Create",
                             isLoading = state is CreateProjectViewModel.ViewState.Loading
                         ) {
-                            viewModel.onCreate()
+                            viewModel.onCreateProject()
                         }
                     }
                 }

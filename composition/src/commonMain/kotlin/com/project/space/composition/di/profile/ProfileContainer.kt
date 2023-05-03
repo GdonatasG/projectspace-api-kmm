@@ -5,6 +5,7 @@ import com.libraries.utils.PlatformScopeManager
 import com.project.space.composition.di.RootContainer
 import com.project.space.composition.di.profile.usecase.GetCurrentUserUseCase
 import com.project.space.composition.di.profile.usecase.GetInvitationsCountUseCase
+import com.project.space.composition.navigation.EditProfileFlow
 import com.project.space.composition.navigation.Navigator
 import com.project.space.composition.navigation.UserInvitationsFlow
 import com.project.space.feature.common.AuthorizationStoreManager
@@ -57,7 +58,11 @@ private class DefaultProfileDelegate(
     private val alert: Alert.Coordinator
 ) : ProfileDelegate {
     override fun onNavigateToEditProfile() {
-
+        EditProfileFlow(
+            container = container,
+            navigator = navigator,
+            alert = alert
+        ).start()
     }
 
     override fun onNavigateToInvitations() {
