@@ -6,6 +6,7 @@ import com.project.space.components.navigation.NavigationAction
 import com.project.space.components.navigation.Navigator
 import com.project.space.feature.authorization.AuthorizationPresenter
 import com.project.space.feature.createproject.CreateProjectPresenter
+import com.project.space.feature.editprofile.EditProfilePresenter
 import com.project.space.feature.userinvitations.UserInvitationsPresenter
 import com.project.space.presentation.destinations.*
 import org.koin.core.context.loadKoinModules
@@ -104,6 +105,23 @@ class DefaultSharedNavigationCoordinator(
         navigator.navigate(
             NavigationAction(
                 destination = UserInvitationsScreenDestination(),
+                navOptions = NavOptions.Builder()
+                    .setLaunchSingleTop(true)
+                    .build(),
+            )
+        )
+    }
+
+    override fun startEditProfile(presenter: EditProfilePresenter) {
+        loadKoinModules(
+            module {
+                factory { presenter }
+            }
+        )
+
+        navigator.navigate(
+            NavigationAction(
+                destination = EditProfileScreenDestination(),
                 navOptions = NavOptions.Builder()
                     .setLaunchSingleTop(true)
                     .build(),

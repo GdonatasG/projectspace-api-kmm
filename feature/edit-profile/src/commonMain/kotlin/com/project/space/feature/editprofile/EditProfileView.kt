@@ -3,7 +3,6 @@ package com.project.space.feature.editprofile
 import com.project.space.feature.editprofile.domain.CurrentUser
 
 sealed class State {
-    object Idle : State()
     object Loading : State()
     data class Content(val user: CurrentUser) : State()
     data class Error(val title: String, val message: String) : State()
@@ -12,7 +11,6 @@ sealed class State {
 sealed class UpdateState {
     object Idle : UpdateState()
     object Loading : UpdateState()
-    data class Error(val title: String, val message: String) : UpdateState()
 }
 
 data class FormErrors(

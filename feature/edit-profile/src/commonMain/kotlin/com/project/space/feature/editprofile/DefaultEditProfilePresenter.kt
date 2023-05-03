@@ -19,7 +19,7 @@ class DefaultEditProfilePresenter(
     private val view
         get() = viewHolder.get()
 
-    private var state: State = State.Idle
+    private var state: State = State.Loading
         private set(newValue) {
             update(view, newValue)
             field = newValue
@@ -91,16 +91,9 @@ class DefaultEditProfilePresenter(
                     it != currentState.user.organizationName
                 }
             ) { response ->
+                updateState = UpdateState.Idle
                 when (response) {
                     is EditProfile.Response.Success -> {
-                        fetchCurrentUser { userResponse ->
-                            when (userResponse) {
-                                is FetchCurrentUser.Response.Success -> {
-                                    state = State.Content(user = userResponse.user)
-                                }
-                                else -> {}
-                            }
-                        }
                         alert.show(Alert {
                             title = "Profile successfully updated!"
                             buttons = listOf(Alert.Button {

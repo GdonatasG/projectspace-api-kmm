@@ -55,7 +55,7 @@ class CreateProjectViewModel(
         _description.value = value
     }
 
-    fun onCreate() {
+    fun onCreateProject() {
         presenter.onCreateProject(name = _name.value.text, description = _description.value.text)
     }
 
