@@ -30,6 +30,10 @@ actual class DateTimeFormatter {
         return formatter.stringFromDate(adjustableDate)
     }
 
+    actual fun localTimezoneConverted(date: String, fromPattern: String, toPattern: String): String {
+        throw Exception("implement")
+    }
+
 
     actual companion object {
         actual val shared: DateTimeFormatter by lazy {

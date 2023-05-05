@@ -4,6 +4,7 @@ import com.project.space.SplashScope
 import com.project.space.composition.di.RootContainer
 import com.project.space.composition.di.profile.ProfileContainer
 import com.project.space.composition.di.projects.ProjectsContainer
+import com.project.space.composition.di.tasks.TasksContainer
 import com.project.space.composition.navigation.RootFlow
 import com.project.space.feature.authorization.AuthorizationPresenter
 import com.project.space.feature.authorization.android_ui.AuthorizationViewModel
@@ -17,6 +18,8 @@ import com.project.space.feature.projects.ProjectsPresenter
 import com.project.space.feature.projects.android_ui.ProjectsViewModel
 import com.project.space.feature.splashscreen.SplashPresenter
 import com.project.space.feature.splashscreen.android_ui.SplashViewModel
+import com.project.space.feature.tasks.TasksPresenter
+import com.project.space.feature.tasks.android_ui.TasksViewModel
 import com.project.space.feature.userinvitations.UserInvitationsPresenter
 import com.project.space.feature.userinvitations.android_ui.UserInvitationsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -91,5 +94,17 @@ val bottomNavigationModule = module {
         val presenter: ProfilePresenter = container.presenter(alert = get())
 
         ProfileViewModel(presenter = presenter)
+    }
+
+    factory<TasksContainer> {
+        val rootContainer: RootContainer = get()
+        rootContainer.tasks()
+    }
+
+    viewModel {
+        val container: TasksContainer = get()
+        val presenter: TasksPresenter = container.presenter()
+
+        TasksViewModel(presenter = presenter)
     }
 }

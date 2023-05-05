@@ -6,6 +6,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        create("release") {
+            storeFile = file("projectspacetest.keystore")
+            storePassword = "test123"
+            keyAlias = "projectspace"
+            keyPassword = "test123"
+        }
+    }
     namespace = "com.project.space"
     compileSdk = Versions.androidCompileSdk
     defaultConfig {
@@ -29,6 +37,7 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
+            this.signingConfig = signingConfigs.getByName("release")
         }
     }
     applicationVariants.all {
@@ -54,6 +63,7 @@ dependencies {
     implementation(project(":feature:profile:android-ui"))
     implementation(project(":feature:userinvitations:android-ui"))
     implementation(project(":feature:edit-profile:android-ui"))
+    implementation(project(":feature:tasks:android-ui"))
 
     ksp(Dependencies.Android.ComposeDestinations.ksp)
     implementation(Dependencies.KotlinX.serializationCore)

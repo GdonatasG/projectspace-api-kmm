@@ -7,7 +7,6 @@ import com.project.space.feature.projects.domain.Project
 import com.project.space.services.common.ProjectSpaceResult
 import com.project.space.services.project.ProjectService
 import com.project.space.services.project.response.ProjectResponse
-import kotlinx.coroutines.delay
 
 class GetProjectsUseCase(
     private val scope: PlatformScopeManager,

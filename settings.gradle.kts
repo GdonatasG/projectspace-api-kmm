@@ -46,3 +46,6 @@ include(":feature:userinvitations:android-ui")
 
 include(":feature:edit-profile")
 include(":feature:edit-profile:android-ui")
+
+include(":feature:tasks")
+include(":feature:tasks:android-ui")

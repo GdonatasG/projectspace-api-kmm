@@ -101,5 +101,4 @@ class ProjectsViewModel(
         is State.Empty -> ViewState.Empty(title = this.title, message = this.message)
         is State.Error -> ViewState.Error(title = this.title, message = this.message)
     }
-
 }
