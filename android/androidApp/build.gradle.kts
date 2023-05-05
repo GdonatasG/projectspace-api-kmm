@@ -54,6 +54,7 @@ dependencies {
     implementation(project(":feature:profile:android-ui"))
     implementation(project(":feature:userinvitations:android-ui"))
     implementation(project(":feature:edit-profile:android-ui"))
+    implementation(project(":feature:tasks:android-ui"))
 
     ksp(Dependencies.Android.ComposeDestinations.ksp)
     implementation(Dependencies.KotlinX.serializationCore)
