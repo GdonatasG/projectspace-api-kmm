@@ -18,6 +18,8 @@ import com.project.space.feature.projects.ProjectsPresenter
 import com.project.space.feature.projects.android_ui.ProjectsViewModel
 import com.project.space.feature.splashscreen.SplashPresenter
 import com.project.space.feature.splashscreen.android_ui.SplashViewModel
+import com.project.space.feature.tasks.TasksPresenter
+import com.project.space.feature.tasks.android_ui.TasksViewModel
 import com.project.space.feature.userinvitations.UserInvitationsPresenter
 import com.project.space.feature.userinvitations.android_ui.UserInvitationsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -97,5 +99,12 @@ val bottomNavigationModule = module {
     factory<TasksContainer> {
         val rootContainer: RootContainer = get()
         rootContainer.tasks()
+    }
+
+    viewModel {
+        val container: TasksContainer = get()
+        val presenter: TasksPresenter = container.presenter()
+
+        TasksViewModel(presenter = presenter)
     }
 }

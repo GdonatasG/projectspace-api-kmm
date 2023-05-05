@@ -6,6 +6,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        create("release") {
+            storeFile = file("projectspacetest.keystore")
+            storePassword = "test123"
+            keyAlias = "projectspace"
+            keyPassword = "test123"
+        }
+    }
     namespace = "com.project.space"
     compileSdk = Versions.androidCompileSdk
     defaultConfig {
@@ -29,6 +37,7 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
+            this.signingConfig = signingConfigs.getByName("release")
         }
     }
     applicationVariants.all {

@@ -26,7 +26,6 @@ import com.project.space.components.view.ErrorView
 import com.project.space.components.view.LoadingView
 import com.project.space.feature.projects.domain.Project
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProjectsScreen(viewModel: ProjectsViewModel) {

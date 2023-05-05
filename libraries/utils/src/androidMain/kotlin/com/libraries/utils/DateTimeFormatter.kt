@@ -40,6 +40,24 @@ actual class DateTimeFormatter {
         return formatter.format(dateTime)
     }
 
+    actual fun localTimezoneConverted(date: String, fromPattern: String, toPattern: String): String {
+        val fromFormatter = java.time.format.DateTimeFormatter
+            .ofPattern(fromPattern)
+            .withLocale(Locale.getDefault())
+            .withZone(ZoneId.systemDefault())
+
+        val timestamp = LocalDateTime.parse(date, fromFormatter).toInstant(ZoneOffset.UTC).epochSecond
+
+        val dateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(timestamp), ZoneId.systemDefault())
+
+        val toFormatter = java.time.format.DateTimeFormatter
+            .ofPattern(toPattern)
+            .withLocale(Locale.getDefault())
+            .withZone(ZoneId.systemDefault())
+
+        return toFormatter.format(dateTime)
+    }
+
     actual companion object {
         actual val shared: DateTimeFormatter by lazy {
             DateTimeFormatter()

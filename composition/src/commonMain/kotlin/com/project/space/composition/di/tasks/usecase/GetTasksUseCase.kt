@@ -37,19 +37,25 @@ class GetTasksUseCase(
 }
 
 private fun TaskResponse.toDomain(): Task {
-    val pattern = "MMM, dd"
+    val pattern = "yyyy-MM-dd'T'HH:mm:ss"
     val formatter = DateTimeFormatter.shared
 
+    var startDate: String? = null
     var endDate: String? = null
 
     this.endDate?.let {
-        endDate = formatter.localTimezone(date = it, pattern = pattern)
+        endDate = formatter.localTimezoneConverted(date = it, fromPattern = pattern, toPattern = "MMM dd hh:mm a")
+    }
+
+    this.startDate?.let {
+        startDate = formatter.localTimezoneConverted(date = it, fromPattern = pattern, toPattern = "MMM dd hh:mm a")
     }
 
     return Task(
         id = this.id,
         title = this.title,
         description = this.description ?: "",
+        startDate = startDate,
         endDate = endDate
     )
 }

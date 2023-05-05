@@ -149,6 +149,7 @@ class RootContainer(
     fun tasks(): TasksContainer = TasksContainer(
         navigator = navigator,
         container = this,
-        taskService = taskService
+        taskService = taskService,
+        selectedProjectManager = selectedProjectManager
     )
 }
