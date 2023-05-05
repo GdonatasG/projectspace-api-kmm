@@ -3,7 +3,6 @@ package com.project.space.feature.projects
 import com.libraries.alerts.Alert
 import com.libraries.utils.PlatformScopeManager
 import com.libraries.utils.ViewHolder
-import com.libraries.utils.observer.Observer
 import com.project.space.feature.common.domain.model.SelectedProject
 import com.project.space.feature.projects.domain.GetProjects
 import com.project.space.feature.projects.domain.GetSelectedProject

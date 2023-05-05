@@ -14,6 +14,7 @@ import com.project.space.composition.di.createproject.CreateProjectContainer
 import com.project.space.composition.di.editprofile.EditProfileContainer
 import com.project.space.composition.di.profile.ProfileContainer
 import com.project.space.composition.di.projects.ProjectsContainer
+import com.project.space.composition.di.tasks.TasksContainer
 import com.project.space.composition.di.userinvitations.UserInvitationsContainer
 import com.project.space.composition.navigation.Navigator
 import com.project.space.feature.common.domain.model.AuthorizationState
@@ -30,6 +31,7 @@ import com.project.space.services.common.http.interceptor.addAuthorizationHandle
 import com.project.space.services.common.http.interceptor.baseUrl
 import com.project.space.services.invitation.InvitationService
 import com.project.space.services.project.ProjectService
+import com.project.space.services.task.TaskService
 import com.project.space.services.user.UserService
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
@@ -96,6 +98,12 @@ class RootContainer(
         )
     }
 
+    private val taskService: TaskService by lazy {
+        TaskService(
+            client = spaceHttpClient
+        )
+    }
+
     fun authorization(): AuthorizationContainer = AuthorizationContainer(
         authorizationStoreManager = authorizationStoreManager, authService = authService, userService = userService
     )
@@ -137,4 +145,10 @@ class RootContainer(
             navigator.startMainFromAuthorization()
         }))
     }
+
+    fun tasks(): TasksContainer = TasksContainer(
+        navigator = navigator,
+        container = this,
+        taskService = taskService
+    )
 }

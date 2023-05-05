@@ -4,6 +4,7 @@ import com.project.space.SplashScope
 import com.project.space.composition.di.RootContainer
 import com.project.space.composition.di.profile.ProfileContainer
 import com.project.space.composition.di.projects.ProjectsContainer
+import com.project.space.composition.di.tasks.TasksContainer
 import com.project.space.composition.navigation.RootFlow
 import com.project.space.feature.authorization.AuthorizationPresenter
 import com.project.space.feature.authorization.android_ui.AuthorizationViewModel
@@ -91,5 +92,10 @@ val bottomNavigationModule = module {
         val presenter: ProfilePresenter = container.presenter(alert = get())
 
         ProfileViewModel(presenter = presenter)
+    }
+
+    factory<TasksContainer> {
+        val rootContainer: RootContainer = get()
+        rootContainer.tasks()
     }
 }
