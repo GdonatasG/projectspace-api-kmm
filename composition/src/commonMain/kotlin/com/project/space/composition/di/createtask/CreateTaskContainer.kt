@@ -103,8 +103,8 @@ private class CreateTaskUseCase(
         title: String,
         priorityId: Int,
         description: String?,
-        startDate: Double?,
-        endDate: Double?,
+        startDate: String?,
+        endDate: String?,
         assignees: List<Int>,
         completion: (CreateTask.Response) -> Unit
     ) {
@@ -122,14 +122,14 @@ private class CreateTaskUseCase(
                 startDate?.let {
                     startDate(
                         Timestamp(
-                            formatter.timestampToUTC0Timestamp(timestamp = it).toLong()
+                            formatter.stringToUTC0Timestamp(date = it, pattern = "yyyy-MM-dd'T'HH:mm:ss")
                         )
                     )
                 }
                 endDate?.let {
                     endDate(
                         Timestamp(
-                            formatter.timestampToUTC0Timestamp(timestamp = it).toLong()
+                            formatter.stringToUTC0Timestamp(date = it, pattern = "yyyy-MM-dd'T'HH:mm:ss")
                         )
                     )
                 }

@@ -13,8 +13,8 @@ interface CreateTask {
         title: String,
         priorityId: Int,
         description: String? = null,
-        startDate: Double? = null,
-        endDate: Double? = null,
+        startDate: String? = null,
+        endDate: String? = null,
         assignees: List<Int> = emptyList(),
         completion: (Response) -> Unit
     )

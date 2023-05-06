@@ -15,7 +15,7 @@ actual class DateTimeFormatter {
         return formatter.stringFromDate(date)
     }
 
-    actual fun timestampToUTC0Timestamp(timestamp: Double): Double {
+    actual fun stringToUTC0Timestamp(date: String, pattern: String): Long {
         throw Exception("implement")
     }
 

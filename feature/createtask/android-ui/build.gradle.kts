@@ -45,6 +45,7 @@ dependencies {
     implementation(Dependencies.Android.coreKtx)
     implementation(Dependencies.Android.appCompat)
     implementation(Dependencies.Android.Compose.material)
+    implementation(Dependencies.Android.Compose.dialogs)
     implementation(Dependencies.Android.Compose.materialIcons)
     implementation(Dependencies.Android.Compose.material3)
     implementation(Dependencies.Android.Compose.activity)

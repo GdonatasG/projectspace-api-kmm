@@ -46,7 +46,8 @@ object Dependencies {
 
         object Accompanist {
             const val flowLayout = "com.google.accompanist:accompanist-flowlayout:${Versions.accompanist}"
-            const val systemUiController = "com.google.accompanist:accompanist-systemuicontroller:${Versions.accompanist}"
+            const val systemUiController =
+                "com.google.accompanist:accompanist-systemuicontroller:${Versions.accompanist}"
         }
 
         object Compose {
@@ -56,6 +57,7 @@ object Dependencies {
             const val activity = "androidx.activity:activity-compose:1.6.1"
             const val runtimeLivedata = "androidx.compose.runtime:runtime-livedata:1.3.3"
             const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
+            const val dialogs = "io.github.vanpra.compose-material-dialogs:datetime:0.8.1-rc"
 
             const val navigation = "androidx.navigation:navigation-compose:${Versions.navCompose}"
         }

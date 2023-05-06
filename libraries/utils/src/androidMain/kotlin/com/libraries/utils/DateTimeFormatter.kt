@@ -1,9 +1,6 @@
 package com.libraries.utils
 
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.ZoneOffset
+import java.time.*
 import java.util.Locale
 
 actual class DateTimeFormatter {
@@ -19,10 +16,9 @@ actual class DateTimeFormatter {
         return formatter.format(date)
     }
 
-    actual fun timestampToUTC0Timestamp(timestamp: Double): Double {
-        val date = LocalDateTime.ofEpochSecond(timestamp.toLong(), 0, ZoneOffset.UTC)
-
-        return (date.second / 1000).toDouble()
+    actual fun stringToUTC0Timestamp(date: String, pattern: String): Long {
+        val localDate = LocalDateTime.parse("${date}T00:00:00", java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+        return localDate.toInstant(ZoneOffset.UTC).epochSecond
     }
 
     actual fun stringLocalTimezone(timestamp: Double, pattern: String): String {

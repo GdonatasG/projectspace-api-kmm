@@ -44,11 +44,11 @@ private fun TaskResponse.toDomain(): Task {
     var endDate: String? = null
 
     this.endDate?.let {
-        endDate = formatter.localTimezoneConverted(date = it, fromPattern = pattern, toPattern = "MMM dd hh:mm a")
+        endDate = formatter.localTimezoneConverted(date = it, fromPattern = pattern, toPattern = "MMM dd")
     }
 
     this.startDate?.let {
-        startDate = formatter.localTimezoneConverted(date = it, fromPattern = pattern, toPattern = "MMM dd hh:mm a")
+        startDate = formatter.localTimezoneConverted(date = it, fromPattern = pattern, toPattern = "MMM dd")
     }
 
     return Task(

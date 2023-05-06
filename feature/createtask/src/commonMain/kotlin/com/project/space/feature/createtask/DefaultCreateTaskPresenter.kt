@@ -99,7 +99,7 @@ class DefaultCreateTaskPresenter(
         delegate.onNavigateToFilter(filter)
     }
 
-    override fun onCreateTask(title: String, description: String, startDate: Double?, endDate: Double?) {
+    override fun onCreateTask(title: String, description: String, startDate: String?, endDate: String?) {
         formErrors = FormErrors.empty()
 
         val taskTitle: String = title.trim()
@@ -128,6 +128,7 @@ class DefaultCreateTaskPresenter(
                 startDate = startDate,
                 endDate = endDate
             ) { response ->
+                state = State.Idle
                 when (response) {
                     is CreateTask.Response.Success -> {
                         alert.show(Alert {
