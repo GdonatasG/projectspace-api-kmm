@@ -10,6 +10,8 @@ import com.project.space.feature.authorization.AuthorizationPresenter
 import com.project.space.feature.authorization.android_ui.AuthorizationViewModel
 import com.project.space.feature.createproject.CreateProjectPresenter
 import com.project.space.feature.createproject.android_ui.CreateProjectViewModel
+import com.project.space.feature.createtask.CreateTaskPresenter
+import com.project.space.feature.createtask.android_ui.CreateTaskViewModel
 import com.project.space.feature.editprofile.EditProfilePresenter
 import com.project.space.feature.editprofile.android_ui.EditProfileViewModel
 import com.project.space.feature.profile.ProfilePresenter
@@ -28,16 +30,13 @@ import org.koin.dsl.module
 val commonModule = module {
     single {
         RootContainer(
-            navigator = get(),
-            alert = get()
+            navigator = get(), alert = get()
         )
     }
 
     factory {
         val flow = RootFlow(
-            container = get(),
-            navigator = get(),
-            alert = get()
+            container = get(), navigator = get(), alert = get()
         )
         val scope = SplashScope(flow = flow)
         scope.createSplashPresenter()
@@ -68,6 +67,12 @@ val commonModule = module {
         val presenter: EditProfilePresenter = get()
 
         EditProfileViewModel(presenter = presenter)
+    }
+
+    viewModel {
+        val presenter: CreateTaskPresenter = get()
+
+        CreateTaskViewModel(presenter = presenter)
     }
 }
 
@@ -103,7 +108,7 @@ val bottomNavigationModule = module {
 
     viewModel {
         val container: TasksContainer = get()
-        val presenter: TasksPresenter = container.presenter()
+        val presenter: TasksPresenter = container.presenter(alert = get())
 
         TasksViewModel(presenter = presenter)
     }

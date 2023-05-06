@@ -6,6 +6,7 @@ import com.project.space.components.navigation.NavigationAction
 import com.project.space.components.navigation.Navigator
 import com.project.space.feature.authorization.AuthorizationPresenter
 import com.project.space.feature.createproject.CreateProjectPresenter
+import com.project.space.feature.createtask.CreateTaskPresenter
 import com.project.space.feature.editprofile.EditProfilePresenter
 import com.project.space.feature.userinvitations.UserInvitationsPresenter
 import com.project.space.presentation.destinations.*
@@ -122,6 +123,23 @@ class DefaultSharedNavigationCoordinator(
         navigator.navigate(
             NavigationAction(
                 destination = EditProfileScreenDestination(),
+                navOptions = NavOptions.Builder()
+                    .setLaunchSingleTop(true)
+                    .build(),
+            )
+        )
+    }
+
+    override fun startCreateTask(presenter: CreateTaskPresenter) {
+        loadKoinModules(
+            module {
+                factory { presenter }
+            }
+        )
+
+        navigator.navigate(
+            NavigationAction(
+                destination = CreateTaskScreenDestination(),
                 navOptions = NavOptions.Builder()
                     .setLaunchSingleTop(true)
                     .build(),

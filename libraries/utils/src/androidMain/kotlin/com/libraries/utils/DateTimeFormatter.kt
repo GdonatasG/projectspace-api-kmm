@@ -19,6 +19,12 @@ actual class DateTimeFormatter {
         return formatter.format(date)
     }
 
+    actual fun timestampToUTC0Timestamp(timestamp: Double): Double {
+        val date = LocalDateTime.ofEpochSecond(timestamp.toLong(), 0, ZoneOffset.UTC)
+
+        return (date.second / 1000).toDouble()
+    }
+
     actual fun stringLocalTimezone(timestamp: Double, pattern: String): String {
         val formatter = java.time.format.DateTimeFormatter.ofPattern(pattern).withZone(ZoneId.systemDefault())
 
