@@ -1,11 +1,16 @@
 package com.project.space.feature.createtask
 
+import com.project.space.feature.common.domain.model.SelectedProject
+
 actual interface CreateTaskView {
     fun display(createProjectViewStateIdle: State.Idle)
     fun display(createProjectViewStateLoading: State.Loading)
 
     fun display(createProjectViewPriorityStateNone: PriorityState.None)
     fun display(createProjectViewPriorityStateSelected: PriorityState.Selected)
+
+    fun display(createProjectViewSelectedProjectStateNone: SelectedProjectState.None)
+    fun display(createProjectViewSelectedProjectStateSelected: SelectedProjectState.Selected)
 
     fun display(createProjectViewFormErrors: FormErrors)
 }
@@ -23,6 +28,14 @@ internal actual fun update(view: CreateTaskView?, state: PriorityState) {
     when (state) {
         is PriorityState.None -> view.display(state)
         is PriorityState.Selected -> view.display(state)
+    }
+}
+
+internal actual fun update(view: CreateTaskView?, state: SelectedProjectState) {
+    view ?: return
+    when (state) {
+        is SelectedProjectState.None -> view.display(state)
+        is SelectedProjectState.Selected -> view.display(state)
     }
 }
 

@@ -6,6 +6,7 @@ import com.libraries.utils.ViewHolder
 import com.project.space.feature.common.FilterDelegate
 import com.project.space.feature.common.FilterViewModel
 import com.project.space.feature.common.RemoteSingleChoiceFiltersViewModel
+import com.project.space.feature.common.domain.model.SelectedProject
 import com.project.space.feature.createtask.domain.CreateTask
 
 class DefaultCreateTaskPresenter(
@@ -13,6 +14,7 @@ class DefaultCreateTaskPresenter(
     private val delegate: CreateTaskDelegate,
     private val alert: Alert.Coordinator,
     private val createTask: CreateTask,
+    private val getSelectedProject: (() -> SelectedProject?),
     private val priorityFilter: RemoteSingleChoiceFiltersViewModel
 ) : CreateTaskPresenter() {
     override var viewHolder: ViewHolder<CreateTaskView> = ViewHolder()
@@ -32,11 +34,39 @@ class DefaultCreateTaskPresenter(
             field = newValue
         }
 
+    private var selectedProjectState: SelectedProjectState = SelectedProjectState.None(
+        title = "No project selected!",
+        message = "You do not have selected any project, feel free to select a project in Projects section below."
+    )
+        private set(newValue) {
+            update(view, newValue)
+            field = newValue
+        }
+
     private var formErrors: FormErrors = FormErrors.empty()
         private set(newValue) {
             update(view, newValue)
             field = newValue
         }
+
+    override fun onResume() {
+        super.onResume()
+        val newSelectedProject = getSelectedProject()
+
+        val currentSelectedProject: SelectedProject? = (selectedProjectState as? SelectedProjectState.Selected)?.project
+
+        if (currentSelectedProject == newSelectedProject) return
+
+        if (newSelectedProject != null) {
+            selectedProjectState = SelectedProjectState.Selected(project = newSelectedProject)
+            return
+        }
+
+        selectedProjectState = SelectedProjectState.None(
+            title = "No project selected!",
+            message = "You do not have selected any project, feel free to select a project in Projects section below."
+        )
+    }
 
     override fun onNavigateBack() {
         delegate.onNavigateBack()
@@ -60,6 +90,7 @@ class DefaultCreateTaskPresenter(
                             name = it.name
                         )
                     )
+                    println(it.toString())
                 }
                 delegate.onNavigateBack()
             }

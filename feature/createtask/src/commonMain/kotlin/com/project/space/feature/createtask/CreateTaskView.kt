@@ -1,5 +1,7 @@
 package com.project.space.feature.createtask
 
+import com.project.space.feature.common.domain.model.SelectedProject
+
 sealed class State {
     object Idle : State()
     object Loading : State()
@@ -8,6 +10,11 @@ sealed class State {
 sealed class PriorityState {
     object None : PriorityState()
     data class Selected(val priority: Priority) : PriorityState()
+}
+
+sealed class SelectedProjectState {
+    data class None(val title: String, val message: String) : SelectedProjectState()
+    data class Selected(val project: SelectedProject) : SelectedProjectState()
 }
 
 data class Priority(
@@ -32,5 +39,7 @@ internal expect fun update(view: CreateTaskView?, state: State)
 internal expect fun update(view: CreateTaskView?, state: PriorityState)
 
 internal expect fun update(view: CreateTaskView?, state: FormErrors)
+internal expect fun update(view: CreateTaskView?, state: SelectedProjectState)
+
 
 expect interface CreateTaskView

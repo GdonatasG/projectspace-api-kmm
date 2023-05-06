@@ -32,7 +32,9 @@ private class DefaultCreateTaskDelegate(
     }
 
     override fun onNavigateToFilter(filter: FiltersViewModel) {
-        TODO("Not yet implemented")
+        FilterFlow(
+            navigator = navigator,
+            viewModel = filter
+        ).start()
     }
-
 }

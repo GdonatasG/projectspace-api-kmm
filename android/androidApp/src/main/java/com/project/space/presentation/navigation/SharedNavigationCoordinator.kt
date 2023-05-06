@@ -5,6 +5,7 @@ import com.libraries.alerts.AlertController
 import com.project.space.components.navigation.NavigationAction
 import com.project.space.components.navigation.Navigator
 import com.project.space.feature.authorization.AuthorizationPresenter
+import com.project.space.feature.common.FiltersViewModel
 import com.project.space.feature.createproject.CreateProjectPresenter
 import com.project.space.feature.createtask.CreateTaskPresenter
 import com.project.space.feature.editprofile.EditProfilePresenter
@@ -140,6 +141,23 @@ class DefaultSharedNavigationCoordinator(
         navigator.navigate(
             NavigationAction(
                 destination = CreateTaskScreenDestination(),
+                navOptions = NavOptions.Builder()
+                    .setLaunchSingleTop(true)
+                    .build(),
+            )
+        )
+    }
+
+    override fun startFilter(viewModel: FiltersViewModel) {
+        loadKoinModules(
+            module {
+                factory { viewModel }
+            }
+        )
+
+        navigator.navigate(
+            NavigationAction(
+                destination = FilterScreenDestination(),
                 navOptions = NavOptions.Builder()
                     .setLaunchSingleTop(true)
                     .build(),

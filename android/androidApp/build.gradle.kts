@@ -54,6 +54,7 @@ dependencies {
     implementation(project(":android:components"))
 
     implementation(project(":feature:common"))
+    implementation(project(":feature:common:android-ui"))
 
     implementation(project(":feature:splashscreen"))
     implementation(project(":feature:splashscreen:android-ui"))

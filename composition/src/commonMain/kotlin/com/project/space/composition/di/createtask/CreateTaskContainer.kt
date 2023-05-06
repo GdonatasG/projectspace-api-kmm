@@ -4,6 +4,7 @@ import com.libraries.alerts.Alert
 import com.libraries.utils.DateTimeFormatter
 import com.libraries.utils.PlatformScopeManager
 import com.project.space.feature.common.FetchRemoteFilters
+import com.project.space.feature.common.FilterViewModel
 import com.project.space.feature.common.RemoteSingleChoiceFiltersViewModel
 import com.project.space.feature.common.SelectedProjectManager
 import com.project.space.feature.createtask.CreateTaskDelegate
@@ -13,9 +14,13 @@ import com.project.space.feature.createtask.domain.CreateTask
 import com.project.space.services.common.ProjectSpaceResult
 import com.project.space.services.common.Timestamp
 import com.project.space.services.task.TaskService
+import com.project.space.services.taskpriority.TaskPriorityService
+import com.project.space.services.taskpriority.response.TaskPriorityName
 
 class CreateTaskContainer(
-    private val taskService: TaskService, private val selectedProjectManager: SelectedProjectManager
+    private val taskService: TaskService,
+    private val taskPriorityService: TaskPriorityService,
+    private val selectedProjectManager: SelectedProjectManager
 ) {
     private val scope: PlatformScopeManager = PlatformScopeManager()
 
@@ -28,7 +33,10 @@ class CreateTaskContainer(
     }
 
     private val priorityFilterUseCase: FetchRemoteFilters by lazy {
-        PriorityFilterUseCase()
+        PriorityFilterUseCase(
+            scope = scope,
+            taskPriorityService = taskPriorityService
+        )
     }
 
     fun presenter(alert: Alert.Coordinator, delegate: CreateTaskDelegate): CreateTaskPresenter =
@@ -37,15 +45,52 @@ class CreateTaskContainer(
             delegate = delegate,
             alert = alert,
             createTask = createTaskUseCase,
+            getSelectedProject = {
+                selectedProjectManager.getSelectedProject()
+            },
             priorityFilter = RemoteSingleChoiceFiltersViewModel(
                 key = "priority_filter", title = "Priority", scope = priorityFilterScope, fetch = priorityFilterUseCase
             )
         )
 }
 
-private class PriorityFilterUseCase() : FetchRemoteFilters {
+private class PriorityFilterUseCase(
+    private val scope: PlatformScopeManager,
+    private val taskPriorityService: TaskPriorityService
+) : FetchRemoteFilters {
     override fun invoke(completion: (FetchRemoteFilters.Response) -> Unit) {
-
+        scope.launch {
+            return@launch when (val response = taskPriorityService.getTaskPriorities()) {
+                is ProjectSpaceResult.Success -> {
+                    completion(FetchRemoteFilters.Response.Content(list = response.data.data.map {
+                        FilterViewModel(
+                            id = it.id.toString(),
+                            name = when (it.name) {
+                                TaskPriorityName.NORMAL -> "NORMAL"
+                                TaskPriorityName.HIGH -> "HIGH"
+                                TaskPriorityName.URGENT -> "URGENT"
+                            }
+                        )
+                    }))
+                }
+                is ProjectSpaceResult.Error -> {
+                    completion(
+                        FetchRemoteFilters.Response.Error(
+                            title = "Unable to load priorities!",
+                            message = response.error.errors[0].message
+                        )
+                    )
+                }
+                else -> {
+                    completion(
+                        FetchRemoteFilters.Response.Error(
+                            title = "Unable to load priorities!",
+                            message = "Something went wrong. Try again!"
+                        )
+                    )
+                }
+            }
+        }
     }
 }
 

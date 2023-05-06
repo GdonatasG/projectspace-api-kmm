@@ -25,6 +25,7 @@ include(":projectspace-services")
 include(":projectspace-services:smoke-tests")
 
 include(":feature:common")
+include(":feature:common:android-ui")
 
 include(":feature:splashscreen")
 include(":feature:splashscreen:android-ui")

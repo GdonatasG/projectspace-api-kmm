@@ -11,15 +11,19 @@ class CreateTaskViewModel(
 ) : ViewModel(), CreateTaskView, LifecycleEventObserver {
 
     override fun display(state: State) {
-        TODO("Not yet implemented")
+
     }
 
     override fun display(state: PriorityState) {
-        TODO("Not yet implemented")
+
     }
 
     override fun display(state: FormErrors) {
-        TODO("Not yet implemented")
+
+    }
+
+    override fun display(state: SelectedProjectState) {
+
     }
 
     init {
@@ -29,6 +33,10 @@ class CreateTaskViewModel(
 
     fun onNavigateBack() {
         presenter.onNavigateBack()
+    }
+
+    fun onNavigateToPrioritySelection(){
+        presenter.onNavigateToPrioritySelection()
     }
 
     override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {

@@ -8,6 +8,8 @@ import com.project.space.composition.di.tasks.TasksContainer
 import com.project.space.composition.navigation.RootFlow
 import com.project.space.feature.authorization.AuthorizationPresenter
 import com.project.space.feature.authorization.android_ui.AuthorizationViewModel
+import com.project.space.feature.common.FiltersViewModel
+import com.project.space.feature.common.android_ui.FilterViewModel
 import com.project.space.feature.createproject.CreateProjectPresenter
 import com.project.space.feature.createproject.android_ui.CreateProjectViewModel
 import com.project.space.feature.createtask.CreateTaskPresenter
@@ -73,6 +75,12 @@ val commonModule = module {
         val presenter: CreateTaskPresenter = get()
 
         CreateTaskViewModel(presenter = presenter)
+    }
+
+    viewModel {
+        val filtersViewModel: FiltersViewModel = get()
+
+        FilterViewModel(viewModel = filtersViewModel)
     }
 }
 

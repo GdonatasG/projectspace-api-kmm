@@ -34,6 +34,10 @@ abstract class FiltersViewModel {
 
     abstract fun onApply()
 
+    fun onNavigateBack() {
+        delegate?.onNavigateBack()
+    }
+
     abstract fun copy(list: List<FilterViewModel>): FiltersViewModel
 
     fun copy(): FiltersViewModel = copy(list.map { it.copy() })
@@ -90,8 +94,8 @@ data class RemoteSingleChoiceFiltersViewModel(
             when (response) {
                 is FetchRemoteFilters.Response.Content -> {
                     val newList = response.list.map {
-                        if (it.id == selectedFilter?.id) {
-                            it.selected = true
+                        if (selectedFilter != null) {
+                            it.selected = it.id == selectedFilter?.id
                         }
                         it
                     }
@@ -100,7 +104,7 @@ data class RemoteSingleChoiceFiltersViewModel(
                         _state.value = FilterState.Content(list = newList)
                     } else {
                         _state.value = FilterState.Empty(
-                            title = "No ${key}s found",
+                            title = "No items found",
                             message = "Feel free to refresh the list by tapping the button below",
                             onRetry = ::retry
                         )
@@ -136,9 +140,15 @@ data class RemoteSingleChoiceFiltersViewModel(
     override fun onApply() {
         val currentState: FilterState.Content = _state.value as? FilterState.Content ?: return
 
-        delegate?.onApplied(
-            list = listOf(currentState.list.first { it.selected })
-        )
+        val appliedList = mutableListOf<FilterViewModel>()
+
+        val selected = currentState.list.firstOrNull { it.selected }
+
+        selected?.let {
+            appliedList.add(it)
+        }
+
+        delegate?.onApplied(list = appliedList)
     }
 
     override fun onRefresh() {
