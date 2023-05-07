@@ -59,3 +59,6 @@ include(":feature:createtask:android-ui")
 
 include(":feature:dashboard")
 include(":feature:dashboard:android-ui")
+
+include(":feature:inviteuser")
+include(":feature:inviteuser:android-ui")
