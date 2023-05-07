@@ -9,6 +9,7 @@ import com.project.space.feature.common.FiltersViewModel
 import com.project.space.feature.createproject.CreateProjectPresenter
 import com.project.space.feature.createtask.CreateTaskPresenter
 import com.project.space.feature.editprofile.EditProfilePresenter
+import com.project.space.feature.inviteuser.InviteUserPresenter
 import com.project.space.feature.userinvitations.UserInvitationsPresenter
 import com.project.space.presentation.destinations.*
 import org.koin.core.context.loadKoinModules
@@ -163,6 +164,24 @@ class DefaultSharedNavigationCoordinator(
                     .build(),
             )
         )
+    }
+
+    override fun startInviteUser(presenter: InviteUserPresenter) {
+        loadKoinModules(
+            module {
+                factory { presenter }
+            }
+        )
+
+        navigator.navigate(
+            NavigationAction(
+                destination = InviteUserScreenDestination(),
+                navOptions = NavOptions.Builder()
+                    .setLaunchSingleTop(true)
+                    .build(),
+            )
+        )
+
     }
 
     override fun pop() {

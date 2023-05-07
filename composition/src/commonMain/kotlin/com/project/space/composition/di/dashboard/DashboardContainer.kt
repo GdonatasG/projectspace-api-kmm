@@ -1,7 +1,9 @@
 package com.project.space.composition.di.dashboard
 
+import com.libraries.alerts.Alert
 import com.libraries.utils.PlatformScopeManager
 import com.project.space.composition.di.RootContainer
+import com.project.space.composition.navigation.InviteUserFlow
 import com.project.space.composition.navigation.Navigator
 import com.project.space.feature.common.SelectedProjectManager
 import com.project.space.feature.dashboard.*
@@ -48,7 +50,7 @@ class DashboardContainer(
         )
     }
 
-    fun presenter(): DashboardPresenter = DefaultDashboardPresenter(
+    fun presenter(alert: Alert.Coordinator): DashboardPresenter = DefaultDashboardPresenter(
         scope = scope,
         getSelectedProject = { selectedProjectManager.getSelectedProject() },
         getStatistics = getStatisticsUseCase,
@@ -56,7 +58,11 @@ class DashboardContainer(
         getMembers = getMembersUseCase,
         delegate = object : DashboardDelegate {
             override fun onNavigateToNewInvitation() {
-
+                InviteUserFlow(
+                    container = container,
+                    navigator = navigator,
+                    alert = alert
+                ).start()
             }
         }
     )

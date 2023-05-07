@@ -5,7 +5,9 @@ import com.project.space.composition.di.RootContainer
 import com.project.space.feature.editprofile.EditProfileDelegate
 
 class EditProfileFlow(
-    private val container: RootContainer, private val navigator: Navigator, private val alert: Alert.Coordinator
+    private val container: RootContainer,
+    private val navigator: Navigator,
+    private val alert: Alert.Coordinator
 ) {
     fun start() {
         val container = container.editProfile()

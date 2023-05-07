@@ -5,6 +5,7 @@ import com.project.space.feature.common.FiltersViewModel
 import com.project.space.feature.createproject.CreateProjectPresenter
 import com.project.space.feature.createtask.CreateTaskPresenter
 import com.project.space.feature.editprofile.EditProfilePresenter
+import com.project.space.feature.inviteuser.InviteUserPresenter
 import com.project.space.feature.userinvitations.UserInvitationsPresenter
 
 interface Navigator {
@@ -23,6 +24,8 @@ interface Navigator {
     fun startCreateTask(presenter: CreateTaskPresenter)
 
     fun startFilter(viewModel: FiltersViewModel)
+
+    fun startInviteUser(presenter: InviteUserPresenter)
 
     fun pop()
 }

@@ -14,6 +14,7 @@ import com.project.space.composition.di.createproject.CreateProjectContainer
 import com.project.space.composition.di.createtask.CreateTaskContainer
 import com.project.space.composition.di.dashboard.DashboardContainer
 import com.project.space.composition.di.editprofile.EditProfileContainer
+import com.project.space.composition.di.inviteuser.InviteUserContainer
 import com.project.space.composition.di.profile.ProfileContainer
 import com.project.space.composition.di.projects.ProjectsContainer
 import com.project.space.composition.di.tasks.TasksContainer
@@ -171,6 +172,11 @@ class RootContainer(
         container = this,
         projectService = projectService,
         projectMemberService = projectMemberService,
+        selectedProjectManager = selectedProjectManager
+    )
+
+    fun inviteUser(): InviteUserContainer = InviteUserContainer(
+        invitationService = invitationService,
         selectedProjectManager = selectedProjectManager
     )
 
