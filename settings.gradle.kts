@@ -3,6 +3,9 @@ pluginManagement {
         google()
         gradlePluginPortal()
         mavenCentral()
+        maven {
+            this.url = java.net.URI("https://repo1.maven.org/maven2/")
+        }
     }
 }
 
@@ -53,3 +56,6 @@ include(":feature:tasks:android-ui")
 
 include(":feature:createtask")
 include(":feature:createtask:android-ui")
+
+include(":feature:dashboard")
+include(":feature:dashboard:android-ui")

@@ -158,6 +158,7 @@ class DefaultCreateTaskPresenter(
                 state = State.Idle
                 when (response) {
                     is CreateTask.Response.Success -> {
+                        delegate.onNavigateBack()
                         alert.show(Alert {
                             this.title = "Task successfully created!"
                             buttons = listOf(Alert.Button {

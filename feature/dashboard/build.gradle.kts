@@ -1,44 +1,25 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    kotlin("plugin.serialization") version Versions.kotlin
 }
 
 kotlin {
     android()
-
+    
     listOf(
         iosX64(),
         iosArm64(),
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "composition"
+            baseName = "dashboard"
         }
     }
 
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(Dependencies.KotlinX.serializationCore)
-
-                implementation(project(":projectspace-services"))
-                implementation(project(":feature:common"))
-
-                api(project(":feature:authorization"))
-                api(project(":feature:projects"))
-                api(project(":feature:create-project"))
-                api(project(":feature:profile"))
-                api(project(":feature:userinvitations"))
-                api(project(":feature:edit-profile"))
-                api(project(":feature:tasks"))
-                api(project(":feature:createtask"))
-                api(project(":feature:dashboard"))
-
-                api(project(":libraries:alerts"))
-                implementation(project(":libraries:logger"))
-                implementation(project(":libraries:preferences"))
-                implementation(project(":libraries:http"))
+                api(project(":feature:common"))
 
                 implementation(project(":libraries:utils"))
             }
@@ -72,7 +53,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.project.space.composition"
+    namespace = "com.project.space.feature.dashboard"
     compileSdk = Versions.androidCompileSdk
     defaultConfig {
         minSdk = Versions.androidMinSdk

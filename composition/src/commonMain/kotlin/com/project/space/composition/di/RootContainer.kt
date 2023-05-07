@@ -12,6 +12,7 @@ import com.libraries.utils.isDebug
 import com.project.space.composition.di.authorization.AuthorizationContainer
 import com.project.space.composition.di.createproject.CreateProjectContainer
 import com.project.space.composition.di.createtask.CreateTaskContainer
+import com.project.space.composition.di.dashboard.DashboardContainer
 import com.project.space.composition.di.editprofile.EditProfileContainer
 import com.project.space.composition.di.profile.ProfileContainer
 import com.project.space.composition.di.projects.ProjectsContainer
@@ -161,6 +162,14 @@ class RootContainer(
     fun createTask(): CreateTaskContainer = CreateTaskContainer(
         taskService = taskService,
         taskPriorityService = taskPriorityService,
+        projectMemberService = projectMemberService,
+        selectedProjectManager = selectedProjectManager
+    )
+
+    fun dashboard(): DashboardContainer = DashboardContainer(
+        navigator = navigator,
+        container = this,
+        projectService = projectService,
         projectMemberService = projectMemberService,
         selectedProjectManager = selectedProjectManager
     )

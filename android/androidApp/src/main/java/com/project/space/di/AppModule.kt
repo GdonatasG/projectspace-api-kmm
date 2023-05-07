@@ -2,6 +2,7 @@ package com.project.space.di
 
 import com.project.space.SplashScope
 import com.project.space.composition.di.RootContainer
+import com.project.space.composition.di.dashboard.DashboardContainer
 import com.project.space.composition.di.profile.ProfileContainer
 import com.project.space.composition.di.projects.ProjectsContainer
 import com.project.space.composition.di.tasks.TasksContainer
@@ -14,6 +15,8 @@ import com.project.space.feature.createproject.CreateProjectPresenter
 import com.project.space.feature.createproject.android_ui.CreateProjectViewModel
 import com.project.space.feature.createtask.CreateTaskPresenter
 import com.project.space.feature.createtask.android_ui.CreateTaskViewModel
+import com.project.space.feature.dashboard.DashboardPresenter
+import com.project.space.feature.dashboard.android_ui.DashboardViewModel
 import com.project.space.feature.editprofile.EditProfilePresenter
 import com.project.space.feature.editprofile.android_ui.EditProfileViewModel
 import com.project.space.feature.profile.ProfilePresenter
@@ -119,5 +122,18 @@ val bottomNavigationModule = module {
         val presenter: TasksPresenter = container.presenter(alert = get())
 
         TasksViewModel(presenter = presenter)
+    }
+
+    factory<DashboardContainer> {
+        val rootContainer: RootContainer = get()
+
+        rootContainer.dashboard()
+    }
+
+    viewModel {
+        val container: DashboardContainer = get()
+        val presenter: DashboardPresenter = container.presenter()
+
+        DashboardViewModel(presenter = presenter)
     }
 }
