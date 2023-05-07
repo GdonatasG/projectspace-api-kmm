@@ -53,3 +53,6 @@ include(":feature:tasks:android-ui")
 
 include(":feature:createtask")
 include(":feature:createtask:android-ui")
+
+include(":feature:dashboard")
+include(":feature:dashboard:android-ui")

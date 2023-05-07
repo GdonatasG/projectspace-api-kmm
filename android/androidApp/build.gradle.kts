@@ -66,6 +66,7 @@ dependencies {
     implementation(project(":feature:edit-profile:android-ui"))
     implementation(project(":feature:tasks:android-ui"))
     implementation(project(":feature:createtask:android-ui"))
+    implementation(project(":feature:dashboard:android-ui"))
 
     ksp(Dependencies.Android.ComposeDestinations.ksp)
     implementation(Dependencies.KotlinX.serializationCore)
