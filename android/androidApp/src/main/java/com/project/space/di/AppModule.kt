@@ -19,6 +19,8 @@ import com.project.space.feature.dashboard.DashboardPresenter
 import com.project.space.feature.dashboard.android_ui.DashboardViewModel
 import com.project.space.feature.editprofile.EditProfilePresenter
 import com.project.space.feature.editprofile.android_ui.EditProfileViewModel
+import com.project.space.feature.inviteuser.InviteUserPresenter
+import com.project.space.feature.inviteuser.android_ui.InviteUserViewModel
 import com.project.space.feature.profile.ProfilePresenter
 import com.project.space.feature.profile.android_ui.ProfileViewModel
 import com.project.space.feature.projects.ProjectsPresenter
@@ -85,6 +87,11 @@ val commonModule = module {
 
         FilterViewModel(viewModel = filtersViewModel)
     }
+
+    viewModel {
+        val presenter: InviteUserPresenter = get()
+        InviteUserViewModel(presenter = presenter)
+    }
 }
 
 val bottomNavigationModule = module {
@@ -132,7 +139,7 @@ val bottomNavigationModule = module {
 
     viewModel {
         val container: DashboardContainer = get()
-        val presenter: DashboardPresenter = container.presenter()
+        val presenter: DashboardPresenter = container.presenter(alert = get())
 
         DashboardViewModel(presenter = presenter)
     }

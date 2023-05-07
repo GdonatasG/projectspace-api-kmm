@@ -7,7 +7,6 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowRight
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -35,7 +34,7 @@ fun UserInvitationsScreen(viewModel: UserInvitationsViewModel) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Create project") },
+                title = { Text(text = "My Invitations") },
                 navigationIcon = {
                     NavigateBackButton(
                         onClick = {
