@@ -21,6 +21,7 @@ import com.project.space.components.view.EmptyView
 import com.project.space.components.view.ErrorView
 import com.project.space.components.view.LoadingView
 import com.project.space.feature.common.FilterState
+import com.project.space.feature.common.RemoteFiltersViewModel
 import com.project.space.feature.common.RemoteSingleChoiceFiltersViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -78,6 +79,15 @@ fun FilterScreen(viewModel: FilterViewModel) {
                                     }
                                 )
                             }
+                            if (filter is RemoteFiltersViewModel) {
+                                CheckboxFilter(
+                                    value = value.selected,
+                                    name = value.name,
+                                    onClick = {
+                                        filterViewModel.onToggle()
+                                    }
+                                )
+                            }
                             if (index < type.list.size - 1) {
                                 Spacer(modifier = Modifier.height(8.dp))
                             }
@@ -122,5 +132,29 @@ private fun RadioFilter(value: Boolean, name: String, onClick: () -> Unit) {
         )
         Spacer(modifier = Modifier.width(8.dp))
         RadioButton(selected = value, onClick = null)
+    }
+}
+
+@Composable
+private fun CheckboxFilter(value: Boolean, name: String, onClick: () -> Unit) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() },
+                onClick = onClick
+            )
+            .requiredHeight(ButtonDefaults.MinHeight)
+    ) {
+        Text(
+            text = name,
+            modifier = Modifier.weight(1f),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            fontWeight = if (value) FontWeight.W600 else FontWeight.Normal
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        Checkbox(checked = value, onCheckedChange = null)
     }
 }

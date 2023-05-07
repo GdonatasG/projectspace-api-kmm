@@ -32,6 +32,7 @@ import com.project.space.services.common.http.interceptor.addAuthorizationHandle
 import com.project.space.services.common.http.interceptor.baseUrl
 import com.project.space.services.invitation.InvitationService
 import com.project.space.services.project.ProjectService
+import com.project.space.services.projectmember.ProjectMemberService
 import com.project.space.services.task.TaskService
 import com.project.space.services.taskpriority.TaskPriorityService
 import com.project.space.services.user.UserService
@@ -112,6 +113,12 @@ class RootContainer(
         )
     }
 
+    private val projectMemberService: ProjectMemberService by lazy {
+        ProjectMemberService(
+            client = spaceHttpClient
+        )
+    }
+
     fun authorization(): AuthorizationContainer = AuthorizationContainer(
         authorizationStoreManager = authorizationStoreManager, authService = authService, userService = userService
     )
@@ -154,6 +161,7 @@ class RootContainer(
     fun createTask(): CreateTaskContainer = CreateTaskContainer(
         taskService = taskService,
         taskPriorityService = taskPriorityService,
+        projectMemberService = projectMemberService,
         selectedProjectManager = selectedProjectManager
     )
 

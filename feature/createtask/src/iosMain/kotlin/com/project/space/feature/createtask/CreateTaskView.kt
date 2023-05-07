@@ -8,7 +8,7 @@ actual interface CreateTaskView {
 
     fun display(createProjectViewPriorityStateNone: PriorityState.None)
     fun display(createProjectViewPriorityStateSelected: PriorityState.Selected)
-
+    fun display(createProjectAssignees: AssigneesState)
     fun display(createProjectViewSelectedProjectStateNone: SelectedProjectState.None)
     fun display(createProjectViewSelectedProjectStateSelected: SelectedProjectState.Selected)
 
@@ -29,6 +29,11 @@ internal actual fun update(view: CreateTaskView?, state: PriorityState) {
         is PriorityState.None -> view.display(state)
         is PriorityState.Selected -> view.display(state)
     }
+}
+
+internal actual fun update(view: CreateTaskView?, state: AssigneesState) {
+    view ?: return
+    view.display(state)
 }
 
 internal actual fun update(view: CreateTaskView?, state: SelectedProjectState) {

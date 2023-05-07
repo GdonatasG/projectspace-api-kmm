@@ -5,6 +5,7 @@ import com.libraries.utils.PlatformScopeManager
 import com.libraries.utils.ViewHolder
 import com.project.space.feature.common.FilterDelegate
 import com.project.space.feature.common.FilterViewModel
+import com.project.space.feature.common.RemoteFiltersViewModel
 import com.project.space.feature.common.RemoteSingleChoiceFiltersViewModel
 import com.project.space.feature.common.domain.model.SelectedProject
 import com.project.space.feature.createtask.domain.CreateTask
@@ -15,7 +16,8 @@ class DefaultCreateTaskPresenter(
     private val alert: Alert.Coordinator,
     private val createTask: CreateTask,
     private val getSelectedProject: (() -> SelectedProject?),
-    private val priorityFilter: RemoteSingleChoiceFiltersViewModel
+    private val priorityFilter: RemoteSingleChoiceFiltersViewModel,
+    private val assigneesFilter: RemoteFiltersViewModel
 ) : CreateTaskPresenter() {
     override var viewHolder: ViewHolder<CreateTaskView> = ViewHolder()
 
@@ -29,6 +31,12 @@ class DefaultCreateTaskPresenter(
         }
 
     private var priorityState: PriorityState = PriorityState.None
+        private set(newValue) {
+            update(view, newValue)
+            field = newValue
+        }
+
+    private var assigneesState: AssigneesState = AssigneesState(data = emptyList())
         private set(newValue) {
             update(view, newValue)
             field = newValue
@@ -86,17 +94,37 @@ class DefaultCreateTaskPresenter(
                 selectedFilter?.let {
                     priorityState = PriorityState.Selected(
                         priority = Priority(
-                            id = it.id.toInt(),
-                            name = it.name
+                            id = it.id.toInt(), name = it.name
                         )
                     )
-                    println(it.toString())
                 }
                 delegate.onNavigateBack()
             }
         }
 
         delegate.onNavigateToFilter(filter)
+    }
+
+    override fun onNavigateToAssigneesSelection() {
+        val filter = assigneesFilter.copy()
+
+        filter.delegate = object : FilterDelegate {
+            override fun onNavigateBack() {
+                delegate.onNavigateBack()
+            }
+
+            override fun onApplied(list: List<FilterViewModel>) {
+                assigneesFilter.setUpdatedFilters(list)
+                assigneesState = AssigneesState(data = list.filter { it.selected }.map {
+                    Assignee(id = it.id.toInt(), name = it.name)
+                })
+
+                delegate.onNavigateBack()
+            }
+        }
+
+        delegate.onNavigateToFilter(filter)
+
     }
 
     override fun onCreateTask(title: String, description: String, startDate: String?, endDate: String?) {
@@ -119,14 +147,13 @@ class DefaultCreateTaskPresenter(
         if (formErrors.isValid()) {
             state = State.Loading
 
-            // TODO: add assignees
-
             createTask(
                 title = taskTitle,
                 priorityId = taskPriority?.id ?: -1,
                 description = taskDescription,
                 startDate = startDate,
-                endDate = endDate
+                endDate = endDate,
+                assignees = assigneesState.data.map { it.id }
             ) { response ->
                 state = State.Idle
                 when (response) {

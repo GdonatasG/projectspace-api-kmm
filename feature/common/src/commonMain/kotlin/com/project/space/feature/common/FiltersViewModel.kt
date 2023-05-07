@@ -179,6 +179,99 @@ data class RemoteSingleChoiceFiltersViewModel(
     }
 }
 
+data class RemoteFiltersViewModel(
+    override val key: String,
+    override val title: String,
+    override var list: List<FilterViewModel> = emptyList(),
+    private val scope: PlatformScopeManager,
+    private val fetch: FetchRemoteFilters
+) : FiltersViewModel() {
+    override val refreshable: Boolean = true
+
+    override val _state: MutableStateFlow<FilterState> = MutableStateFlow(FilterState.Loading)
+
+    override val _refreshing: MutableStateFlow<Boolean> = MutableStateFlow(false)
+
+    private var _mutableList: List<FilterViewModel> = list.map { it.copy() }
+
+    override fun onAppear() {
+        super.onAppear()
+        _state.value = FilterState.Loading
+        fetchList()
+    }
+
+    private fun fetchList() {
+        fetch { response ->
+            when (response) {
+                is FetchRemoteFilters.Response.Content -> {
+                    _mutableList = response.list.map { newFilter ->
+                        newFilter.selected = _mutableList.any { oldFilter ->
+                            newFilter.id == oldFilter.id && oldFilter.selected
+                        }
+                        newFilter
+                    }.toList()
+
+                    if (_mutableList.isNotEmpty()) {
+                        _state.value = FilterState.Content(list = _mutableList)
+                    } else {
+                        _state.value = FilterState.Empty(
+                            title = "No items found",
+                            message = "Feel free to refresh the list by tapping the button below",
+                            onRetry = ::retry
+                        )
+                    }
+
+
+                }
+                is FetchRemoteFilters.Response.Error -> {
+                    _state.value =
+                        FilterState.Error(title = response.title, message = response.message, onRetry = ::retry)
+                }
+            }
+
+        }
+    }
+
+    private fun retry() {
+        _state.value = FilterState.Loading
+        scope.cancelAllJobs()
+        fetchList()
+    }
+
+    override fun onApply() {
+        val currentFilters: FilterState.Content = _state.value as? FilterState.Content ?: return
+
+        delegate?.onApplied(currentFilters.list.filter { it.selected }.map { it.copy() })
+    }
+
+    override fun onRefresh() {
+        if (!refreshable) {
+            throw IllegalArgumentException("You are calling onRefresh method of filter that has disabled refresh functionality")
+        }
+
+        _refreshing.value = true
+        scope.cancelAllJobs()
+        fetchList()
+    }
+
+    override fun onClear() {
+        super.onClear()
+        scope.cancelAllJobs()
+    }
+
+    override fun copy(list: List<FilterViewModel>): FiltersViewModel {
+        return RemoteFiltersViewModel(
+            key = this.key,
+            fetch = this.fetch,
+            title = this.title,
+            scope = this.scope,
+            list = list
+        ).also {
+            it._state.value = _state.value
+        }
+    }
+}
+
 data class FilterViewModel(
     val id: String,
     val name: String,

@@ -5,7 +5,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
-import com.libraries.utils.DateTimeFormatter
 import com.project.space.feature.common.domain.model.SelectedProject
 import com.project.space.feature.createtask.*
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,15 +12,15 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.ZoneOffset
 
 class CreateTaskViewModel(
     private val presenter: CreateTaskPresenter
 ) : ViewModel(), CreateTaskView, LifecycleEventObserver {
     private val _state: MutableStateFlow<ViewState> = MutableStateFlow(ViewState.Idle)
     val state: StateFlow<ViewState> get() = _state.asStateFlow()
+
+    private val _assignees: MutableStateFlow<AssigneesState> = MutableStateFlow(AssigneesState(data = emptyList()))
+    val assignees: StateFlow<AssigneesState> get() = _assignees.asStateFlow()
 
     private val _selectedProjectState: MutableStateFlow<SelectedProjectViewState> =
         MutableStateFlow(SelectedProjectViewState.None(title = "", message = ""))
@@ -72,6 +71,10 @@ class CreateTaskViewModel(
         }
     }
 
+    override fun display(state: AssigneesState) {
+        _assignees.update { state }
+    }
+
     override fun display(state: FormErrors) {
         _titleError.value = state.title
         _priorityError.value = state.priority
@@ -91,6 +94,8 @@ class CreateTaskViewModel(
 
     fun onStartDateChanged(date: LocalDate?) {
         _selectedStartDate.value = date
+        if (date == null) return
+
         _selectedEndDate.value?.let { end ->
             if (end < date) {
                 _selectedEndDate.value = null
@@ -108,6 +113,10 @@ class CreateTaskViewModel(
 
     fun onNavigateToPrioritySelection() {
         presenter.onNavigateToPrioritySelection()
+    }
+
+    fun onNavigateToAssigneesSelection() {
+        presenter.onNavigateToAssigneesSelection()
     }
 
     fun onCreateTask() {
