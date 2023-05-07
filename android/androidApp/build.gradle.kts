@@ -54,6 +54,7 @@ dependencies {
     implementation(project(":android:components"))
 
     implementation(project(":feature:common"))
+    implementation(project(":feature:common:android-ui"))
 
     implementation(project(":feature:splashscreen"))
     implementation(project(":feature:splashscreen:android-ui"))
@@ -64,6 +65,7 @@ dependencies {
     implementation(project(":feature:userinvitations:android-ui"))
     implementation(project(":feature:edit-profile:android-ui"))
     implementation(project(":feature:tasks:android-ui"))
+    implementation(project(":feature:createtask:android-ui"))
 
     ksp(Dependencies.Android.ComposeDestinations.ksp)
     implementation(Dependencies.KotlinX.serializationCore)

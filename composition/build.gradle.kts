@@ -32,6 +32,7 @@ kotlin {
                 api(project(":feature:userinvitations"))
                 api(project(":feature:edit-profile"))
                 api(project(":feature:tasks"))
+                api(project(":feature:createtask"))
 
                 api(project(":libraries:alerts"))
                 implementation(project(":libraries:logger"))

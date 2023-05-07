@@ -25,6 +25,7 @@ include(":projectspace-services")
 include(":projectspace-services:smoke-tests")
 
 include(":feature:common")
+include(":feature:common:android-ui")
 
 include(":feature:splashscreen")
 include(":feature:splashscreen:android-ui")
@@ -49,3 +50,6 @@ include(":feature:edit-profile:android-ui")
 
 include(":feature:tasks")
 include(":feature:tasks:android-ui")
+
+include(":feature:createtask")
+include(":feature:createtask:android-ui")

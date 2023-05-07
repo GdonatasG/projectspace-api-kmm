@@ -11,6 +11,7 @@ import com.libraries.preferences.Preferences
 import com.libraries.utils.isDebug
 import com.project.space.composition.di.authorization.AuthorizationContainer
 import com.project.space.composition.di.createproject.CreateProjectContainer
+import com.project.space.composition.di.createtask.CreateTaskContainer
 import com.project.space.composition.di.editprofile.EditProfileContainer
 import com.project.space.composition.di.profile.ProfileContainer
 import com.project.space.composition.di.projects.ProjectsContainer
@@ -31,7 +32,9 @@ import com.project.space.services.common.http.interceptor.addAuthorizationHandle
 import com.project.space.services.common.http.interceptor.baseUrl
 import com.project.space.services.invitation.InvitationService
 import com.project.space.services.project.ProjectService
+import com.project.space.services.projectmember.ProjectMemberService
 import com.project.space.services.task.TaskService
+import com.project.space.services.taskpriority.TaskPriorityService
 import com.project.space.services.user.UserService
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
@@ -104,6 +107,18 @@ class RootContainer(
         )
     }
 
+    private val taskPriorityService: TaskPriorityService by lazy {
+        TaskPriorityService(
+            client = spaceHttpClient
+        )
+    }
+
+    private val projectMemberService: ProjectMemberService by lazy {
+        ProjectMemberService(
+            client = spaceHttpClient
+        )
+    }
+
     fun authorization(): AuthorizationContainer = AuthorizationContainer(
         authorizationStoreManager = authorizationStoreManager, authService = authService, userService = userService
     )
@@ -136,6 +151,20 @@ class RootContainer(
         userService = userService
     )
 
+    fun tasks(): TasksContainer = TasksContainer(
+        navigator = navigator,
+        container = this,
+        taskService = taskService,
+        selectedProjectManager = selectedProjectManager
+    )
+
+    fun createTask(): CreateTaskContainer = CreateTaskContainer(
+        taskService = taskService,
+        taskPriorityService = taskPriorityService,
+        projectMemberService = projectMemberService,
+        selectedProjectManager = selectedProjectManager
+    )
+
     fun onLogout() {
         authorizationStoreManager.clearAuthState()
         authorizationStoreManager.clearCurrentUser()
@@ -145,11 +174,4 @@ class RootContainer(
             navigator.startMainFromAuthorization()
         }))
     }
-
-    fun tasks(): TasksContainer = TasksContainer(
-        navigator = navigator,
-        container = this,
-        taskService = taskService,
-        selectedProjectManager = selectedProjectManager
-    )
 }

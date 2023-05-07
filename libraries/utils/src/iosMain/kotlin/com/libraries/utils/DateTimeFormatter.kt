@@ -15,6 +15,10 @@ actual class DateTimeFormatter {
         return formatter.stringFromDate(date)
     }
 
+    actual fun stringToUTC0Timestamp(date: String, pattern: String): Long {
+        throw Exception("implement")
+    }
+
     actual fun stringLocalTimezone(timestamp: Double, pattern: String): String {
         formatter.dateFormat = pattern
         formatter.timeZone = NSTimeZone.localTimeZone

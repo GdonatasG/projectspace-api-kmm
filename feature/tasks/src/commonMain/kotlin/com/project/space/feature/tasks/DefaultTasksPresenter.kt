@@ -45,8 +45,10 @@ class DefaultTasksPresenter(
             if (newSelectedProject != currentSelectedProject) {
                 tab = Tab.MY_TASKS
                 state = State.Loading
-                _getTasks()
             }
+
+            _getTasks()
+
             return
         }
 
